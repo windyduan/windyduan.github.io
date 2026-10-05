@@ -15,6 +15,7 @@ export class HorizontalPager{
   constructor({carousel,topbar,pageDots,lang="zh",onSectionChange}){
     this.carousel=carousel;this.topbar=topbar;this.pageDots=pageDots;this.lang=lang;this.onSectionChange=onSectionChange;
     this.slides=[...carousel.querySelectorAll(".slide")];this.active=0;this.wheelLock=false;this.chrome=new ChromeActivity(topbar);
+    this.abort=new AbortController();
     this.renderDots();this.bind();this.sync();
   }
   setLanguage(lang){this.lang=lang;this.renderDots();this.sync()}
@@ -23,28 +24,29 @@ export class HorizontalPager{
     this.pageDots.querySelectorAll("[data-page-go]").forEach(b=>b.onclick=()=>this.go(Number(b.dataset.pageGo)));
   }
   bind(){
+    const opt={signal:this.abort.signal};
     this.carousel.addEventListener("scroll",()=>{
       this.chrome.moving();
       const i=Math.round(this.carousel.scrollLeft/Math.max(1,this.carousel.clientWidth));
       if(i!==this.active){this.active=i;this.sync()}
-    },{passive:true});
-    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>this.chrome.moving(),{passive:true}));
-    this.carousel.addEventListener("touchmove",()=>this.chrome.moving(),{passive:true});
+    },{passive:true,signal:this.abort.signal});
+    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>this.chrome.moving(),{passive:true,signal:this.abort.signal}));
+    this.carousel.addEventListener("touchmove",()=>this.chrome.moving(),{passive:true,signal:this.abort.signal});
     window.addEventListener("keydown",e=>{
       if(["INPUT","TEXTAREA"].includes(document.activeElement?.tagName))return;
       if(e.key==="ArrowRight"){e.preventDefault();this.go(this.active+1)}
       if(e.key==="ArrowLeft"){e.preventDefault();this.go(this.active-1)}
       if(e.key==="Home")this.go(0);
       if(e.key==="End")this.go(this.slides.length-1);
-    });
-    this.carousel.addEventListener("wheel",e=>this.onWheel(e),{passive:false});
+    },opt);
+    this.carousel.addEventListener("wheel",e=>this.onWheel(e),{passive:false,signal:this.abort.signal});
     document.addEventListener("click",e=>{
       const target=e.target.closest("[data-section-go]");
       if(!target)return;
       const id=target.dataset.sectionGo;
       const i=sections.findIndex(s=>s.id===id);
       if(i>=0)this.go(i);
-    });
+    },opt);
   }
   onWheel(e){
     this.chrome.moving();
@@ -66,6 +68,7 @@ export class HorizontalPager{
     this.slides[next].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",inline:"start",block:"nearest"});
     this.sync();
   }
+  destroy(){this.abort.abort();clearTimeout(this.chrome.timer)}
   sync(){
     this.slides.forEach((s,i)=>s.classList.toggle("is-active",i===this.active));
     document.querySelectorAll("[data-section-go]").forEach(b=>b.classList.toggle("active",sections[this.active]?.id===b.dataset.sectionGo));
