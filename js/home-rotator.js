@@ -25,6 +25,7 @@ export class ExploreRotator{
     const card=siteContent.exploreCards[this.index];
     const dots=siteContent.exploreCards.map((_,i)=>`<button class="explore-dot ${i===this.index?"active":""}" type="button" data-rotator-go="${i}" aria-label="Card ${i+1}"><i></i></button>`).join("");
     this.root.style.setProperty("--card-accent",`var(--${card.accent})`);
+    const keepPaused=this.paused;
     this.root.innerHTML=`<div class="explore-ghost one"></div><div class="explore-ghost two"></div>
       <article class="explore-card swap-in">
         <div class="explore-head"><span class="explore-icon">${icon(card.icon)}</span><span class="explore-index">${String(this.index+1).padStart(2,"0")} / ${String(siteContent.exploreCards.length).padStart(2,"0")}</span></div>
@@ -32,7 +33,7 @@ export class ExploreRotator{
         <div class="explore-bottom"><span class="explore-label">NOW EXPLORING</span><div class="explore-dots">${dots}</div></div>
       </article>`;
     this.root.querySelectorAll("[data-rotator-go]").forEach(b=>b.onclick=()=>{this.pause();this.go(Number(b.dataset.rotatorGo));setTimeout(()=>this.resume(),1200)});
-    this.resume();
+    if(keepPaused)this.pause();else this.resume();
   }
-  destroy(){clearTimeout(this.timer)}
+  destroy(){clearTimeout(this.timer);this.root?.replaceChildren?.()}
 }
