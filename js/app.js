@@ -2,8 +2,10 @@ import { renderSite, renderTopbar } from "./render.js";
 import { Preferences } from "./theme.js";
 import { ExploreRotator } from "./home-rotator.js";
 import { HorizontalPager, LocalTocManager } from "./navigation.js";
+import { sections } from "../data/content.js";
 
 let pager,toc,rotator,prefs;
+let currentSectionId="home";
 
 function reveal(root=document){
   const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")}),{threshold:.05});
@@ -11,6 +13,7 @@ function reveal(root=document){
 }
 
 function wire(lang){
+  if(pager)currentSectionId=sections[pager.active]?.id||currentSectionId;
   pager?.destroy?.();
   toc?.destroy?.();
   rotator?.destroy?.();
@@ -24,8 +27,10 @@ function wire(lang){
     topbar:document.getElementById("topbar"),
     pageDots:document.getElementById("page-dots"),
     lang,
-    onSectionChange:id=>rotator?.setActive(id==="home")
+    onSectionChange:id=>{currentSectionId=id;rotator?.setActive(id==="home")}
   });
+  const restoreIndex=sections.findIndex(s=>s.id===currentSectionId);
+  if(restoreIndex>0)pager.go(restoreIndex);
 }
 
 prefs=new Preferences({onLanguageChange:lang=>wire(lang)});
