@@ -11,12 +11,13 @@ function reveal(root=document){
 }
 
 function wire(lang){
+  pager?.destroy?.();
+  toc?.destroy?.();
+  rotator?.destroy?.();
   const carousel=document.getElementById("carousel");
   renderSite(lang);renderTopbar(lang);reveal(carousel);
   const homeRotatorRoot=document.getElementById("explore-rotator");
-  rotator?.destroy?.();
   rotator=new ExploreRotator(homeRotatorRoot,{lang,interval:3000});
-  toc?.destroy?.();
   toc=new LocalTocManager({carousel,lang});
   pager=new HorizontalPager({
     carousel,
