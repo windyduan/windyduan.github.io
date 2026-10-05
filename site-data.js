@@ -14,10 +14,21 @@ window.PORTFOLIO_DATA = {
       en: "I build tools, read papers, and occasionally add a small piece to open source."
     },
     intro: {
-      zh: "我经常折腾 agents 和工具链，也对科学计算、开发者工具、可视化、学习系统，以及各种有趣的软件感兴趣。AI for Science 只是我认可并在探索的科研方向之一，不是全部。这个页面只放我愿意公开的部分；还不能公开的科研，就先认真做。",
-      en: "I spend a lot of time tinkering with agents and toolchains, and I am also interested in scientific computing, developer tools, visualization, learning systems, and whatever software happens to be interesting. AI for Science is one research direction I value and explore, not the whole story. This site only contains work I am comfortable making public."
+      zh: "我经常折腾 agents 和工具链，也会主动去学不同的求职方向和学术热点：AI、AI for Science、科学计算、开发者工具、可视化、ML systems……都可能成为一段时间里的学习主题。它们是探索方向，不是身份标签。这个页面只放我愿意公开、也真正动手验证过的部分；还不能公开的科研，就先认真做。",
+      en: "I spend a lot of time tinkering with agents and toolchains, and I deliberately sample different job directions and research topics: AI, AI for Science, scientific computing, developer tools, visualization, ML systems, and whatever looks worth learning next. These are directions to explore, not identity labels. This site only shows things I am comfortable making public and have actually tried to validate by building, writing, or contributing."
     }
   },
+
+  exploring: [
+    "AI",
+    "Agents",
+    "AI for Science",
+    "Scientific computing",
+    "Developer tools",
+    "Visualization",
+    "ML systems",
+    "Whatever looks worth learning next"
+  ],
 
   interests: [
     {
