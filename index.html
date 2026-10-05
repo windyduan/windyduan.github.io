@@ -2,277 +2,180 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f6f1e7">
 <meta name="description" content="windyduan — research, software, open source, and things worth trying.">
 <meta property="og:title" content="windyduan">
 <meta property="og:description" content="Research, software, open source, and things worth trying.">
 <meta property="og:type" content="website">
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
 <title>windyduan</title>
-<style>
-:root{
-  --page:#f6f1e7;--surface:#fffdf8;--surface2:#f1ebe1;--surface3:#e6ded1;
-  --ink:#34362f;--muted:#6f7066;--line:#ddd6c9;--link:#0a7ca8;
-  --blue:#8dd1f3;--green:#b3dca5;--yellow:#efd875;--orange:#efb37b;--pink:#eaa1bd;--violet:#b8a7e8;
-  --shadow:0 8px 28px #66583a0b;--max:1080px;color-scheme:light
-}
-:root[data-theme='dark']{
-  --page:#232827;--surface:#2d3431;--surface2:#363e39;--surface3:#444c45;
-  --ink:#f5f1e7;--muted:#c6c7bb;--line:#4b554d;--link:#8bd5f5;--shadow:0 12px 34px #0002;color-scheme:dark
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--page);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
-  font-size:14px;line-height:1.75;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.76' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.035'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
-  background-size:180px 180px;overflow-x:hidden
-}
-:root[data-theme='dark'] body:after{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.42;
-  background:
-    radial-gradient(circle at 13% 20%,#b9eaff 0 1px,transparent 1.6px) 0 0/190px 170px,
-    radial-gradient(circle at 70% 9%,#ffe9a9 0 1px,transparent 1.6px) 0 0/245px 220px,
-    radial-gradient(circle at 85% 45%,#d7c7ff 0 1px,transparent 1.7px) 0 0/290px 270px
-}
-a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}.shell{width:min(calc(100% - 34px),var(--max));margin:auto}
-.topbar{
-  width:min(calc(100% - 28px),1140px);min-height:58px;position:sticky;top:12px;z-index:50;margin:12px auto 0;
-  display:flex;align-items:center;gap:12px;padding:7px 10px 7px 14px;border:1px solid var(--line);border-radius:18px;
-  background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(15px);box-shadow:0 4px 15px #3e302508
-}
-.topbar:after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:2px;border-radius:99px;opacity:.6;background:linear-gradient(90deg,#339ed8,#24bbc4,#59af62,#e6bf3c,#ed853e,#e36564,#d45d89)}
-.brand{margin-right:auto;display:flex;align-items:baseline;gap:9px;min-width:0}.wordmark{font-weight:850;letter-spacing:-1.5px;background:linear-gradient(90deg,#299fd4,#17b4be,#55ac64,#e7b835,#ed813c,#dd5980,#9d79df,#299fd4);background-size:230% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rainbow 14s linear infinite}.brand .wordmark{font-size:27px}.brand small{font-size:10px;color:var(--muted);white-space:nowrap}.nav{display:flex;gap:2px}.nav a{padding:8px 9px;border-radius:10px;font-size:12px;color:var(--muted)}.nav a:hover{background:var(--surface2);color:var(--ink)}
-.actions{display:flex;gap:3px}.icon{border:0;background:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer}.icon:hover{background:var(--surface2);color:var(--link)}
-.hero{padding:96px 0 56px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center}.kicker{color:var(--link);font-weight:700;font-size:12px;letter-spacing:.03em}.hero h1{margin:15px 0 18px;font-family:'Iowan Old Style','Palatino Linotype','Songti SC',Georgia,serif;font-size:clamp(44px,7vw,80px);line-height:1.08;letter-spacing:-.045em;font-weight:650}.hero h1 .wordmark{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC',sans-serif;font-size:1.08em}.intro{font-size:18px;line-height:1.9;color:var(--muted);max-width:690px}.hero-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.btn{display:inline-flex;align-items:center;gap:7px;min-height:43px;padding:10px 15px;border:1px solid var(--line);border-radius:13px;background:var(--surface);font-size:12px;font-weight:700;box-shadow:0 2px 6px #2343540d}.btn.primary{background:color-mix(in srgb,var(--blue) 72%,var(--surface));color:#17343a;border-color:transparent}.btn:hover{transform:translateY(-1px)}
-.scrapbook{position:relative;min-height:390px}.paper{position:absolute;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:var(--shadow);padding:22px}.paper.back{inset:42px 16px 26px 48px;transform:rotate(4deg);background:color-mix(in srgb,var(--violet) 13%,var(--surface))}.paper.mid{inset:20px 36px 48px 18px;transform:rotate(-4deg);background:color-mix(in srgb,var(--green) 14%,var(--surface))}.paper.front{inset:35px 25px 30px 28px;display:flex;flex-direction:column}.paper .label{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--link);letter-spacing:.08em}.paper h2{font-family:'Iowan Old Style','Palatino Linotype','Songti SC',Georgia,serif;font-size:28px;line-height:1.25;margin:12px 0 8px}.paper p{color:var(--muted);margin:0}.interest-cloud{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:20px}.chip{padding:6px 9px;border-radius:9px;background:var(--surface2);font-size:10px;color:var(--muted)}.doodle{position:absolute;right:14px;top:11px;width:78px;height:78px;opacity:.55}.doodle circle,.doodle path{stroke:var(--link)}
-.jump-grid{display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:14px;padding:12px 0 80px}.jump{position:relative;min-height:150px;border:1px solid var(--line);border-radius:19px;background:var(--surface);padding:19px;box-shadow:0 2px 7px #3e302506}.jump:first-child{background:color-mix(in srgb,var(--blue) 18%,var(--surface))}.jump:nth-child(2){background:color-mix(in srgb,var(--green) 16%,var(--surface))}.jump:nth-child(3){background:color-mix(in srgb,var(--yellow) 18%,var(--surface))}.jump small{font-size:10px;color:var(--muted);font-weight:700}.jump h3{font-size:20px;margin:5px 0 6px}.jump p{margin:0;color:var(--muted);font-size:12px}.jump b{position:absolute;right:16px;top:14px;color:var(--link)}
-.section{padding:72px 0}.section-head{display:grid;grid-template-columns:68px 1fr;gap:16px;margin-bottom:28px}.section-head>span{font:700 10px ui-monospace,Menlo,monospace;color:var(--muted);padding-top:6px}.section-head h2{font-family:'Iowan Old Style','Palatino Linotype','Songti SC',Georgia,serif;font-size:clamp(30px,4vw,44px);line-height:1.2;letter-spacing:-.035em;margin:0 0 8px;font-weight:650}.section-head p{margin:0;color:var(--muted);max-width:720px}
-.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.project{border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:22px;min-height:238px;box-shadow:0 2px 7px #3e302506}.project[data-accent="green"]{background:color-mix(in srgb,var(--green) 9%,var(--surface))}.project[data-accent="blue"]{background:color-mix(in srgb,var(--blue) 9%,var(--surface))}.project .eyebrow{font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.07em;color:var(--link)}.project h3{font-size:22px;margin:10px 0 10px}.project p{color:var(--muted);line-height:1.85}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}.tag{padding:5px 8px;border-radius:8px;background:var(--surface2);font-size:10px;color:var(--muted)}.project-links{display:flex;gap:14px;margin-top:20px;color:var(--link);font-size:11px;font-weight:700}
-.paper-list{border:1px solid var(--line);border-radius:21px;background:var(--surface);overflow:hidden}.pub{padding:22px;border-bottom:1px solid var(--line)}.pub:last-child{border-bottom:0}.pub-meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font:700 10px ui-monospace,Menlo,monospace}.pub h3{font-family:'Iowan Old Style','Palatino Linotype','Songti SC',Georgia,serif;font-size:21px;line-height:1.4;margin:8px 0}.pub .authors,.pub .venue,.pub p{color:var(--muted);margin:4px 0}.pub-links{display:flex;gap:12px;margin-top:12px;font-size:11px;color:var(--link);font-weight:700}.empty{padding:30px;display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}.empty-icon{width:52px;height:52px;border-radius:15px;background:color-mix(in srgb,var(--yellow) 28%,var(--surface));display:grid;place-items:center;font-size:22px}.empty h3{margin:0 0 5px;font-size:16px}.empty p{margin:0;color:var(--muted)}.empty code{font-size:11px;background:var(--surface2);padding:2px 5px;border-radius:5px}
-.contrib-intro{padding:16px 18px;border-radius:16px;background:color-mix(in srgb,var(--green) 11%,var(--surface));border:1px solid var(--line);margin-bottom:13px;color:var(--muted)}.contrib-intro strong{color:var(--ink)}.contrib{border:1px solid var(--line);border-radius:20px;background:var(--surface);overflow:hidden}.contrib a{display:grid;grid-template-columns:90px 1.25fr 2fr auto;gap:16px;align-items:start;padding:18px 20px;border-bottom:1px solid var(--line)}.contrib a:last-child{border-bottom:0}.contrib a:hover{background:var(--surface2)}.state{width:max-content;padding:5px 7px;border-radius:7px;font:700 9px ui-monospace,Menlo,monospace}.state.merged{background:color-mix(in srgb,var(--green) 40%,var(--surface))}.state.open{background:color-mix(in srgb,var(--yellow) 42%,var(--surface))}.contrib strong{font-size:13px}.contrib p{margin:0;color:var(--muted);font-size:12px}.contrib .go{color:var(--link)}
-.interests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.interest{border:1px solid var(--line);border-radius:17px;background:var(--surface);padding:17px}.interest b{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--surface2);color:var(--link);margin-bottom:11px}.interest h3{font-size:15px;margin:0 0 5px}.interest p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
-.timeline{border-left:1px solid var(--line);margin-left:8px;padding-left:22px}.exp{position:relative;padding:0 0 22px}.exp:before{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--link);left:-27px;top:8px;box-shadow:0 0 0 5px var(--page)}.exp small{color:var(--muted)}.exp h3{margin:3px 0}.exp p{margin:0;color:var(--muted)}
-.about{border:1px solid var(--line);border-radius:23px;background:var(--surface);padding:28px;display:grid;grid-template-columns:1.15fr .85fr;gap:32px}.about h2{font-family:'Iowan Old Style','Palatino Linotype','Songti SC',Georgia,serif;font-size:clamp(28px,4vw,40px);line-height:1.3;margin:7px 0 12px}.about p{color:var(--muted)}.aside-note{border-radius:17px;padding:20px;background:color-mix(in srgb,var(--orange) 16%,var(--surface));align-self:center}.aside-note strong{color:var(--link)}.contact-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
-footer{margin-top:24px;padding:34px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.footer-row{display:flex;justify-content:space-between;gap:16px;align-items:center}.reveal{opacity:0;transform:translateY(12px);transition:.5s ease}.reveal.show{opacity:1;transform:none}
-@keyframes rainbow{to{background-position:230% 0}}
-@media(max-width:820px){
-  .nav{display:none}.brand small{display:none}.hero{padding-top:62px}.hero-grid{grid-template-columns:1fr;gap:24px}.scrapbook{min-height:330px}
-  .jump-grid{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.interests{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .section-head{grid-template-columns:1fr}.section-head>span{display:none}.contrib a{grid-template-columns:1fr;gap:7px}.contrib .go{display:none}.about{grid-template-columns:1fr}
-}
-@media(max-width:520px){.topbar{width:calc(100% - 18px);top:7px;margin-top:7px}.hero h1{font-size:46px}.intro{font-size:16px}.hero-links{display:grid;grid-template-columns:1fr 1fr}.btn{justify-content:center}.interests{grid-template-columns:1fr}.footer-row{display:block}.footer-row span:last-child{display:block;margin-top:8px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.wordmark{animation:none}.reveal{opacity:1;transform:none;transition:none}.btn{transition:none}}
-</style>
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="#top"><span class="wordmark">windyduan</span><small data-i18n="brandSub">personal notes / work / side quests</small></a>
-  <nav class="nav">
-    <a href="#work" data-i18n="navWork">Work</a>
-    <a href="#papers" data-i18n="navPapers">Papers</a>
-    <a href="#open-source" data-i18n="navOss">Open source</a>
-    <a href="#interests" data-i18n="navInterests">Interests</a>
-  </nav>
-  <div class="actions">
-    <button class="icon" id="lang" aria-label="Switch language">EN</button>
-    <button class="icon" id="theme" aria-label="Toggle theme">
-      <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"></svg>
+<header class="topbar" id="topbar">
+  <a class="brand" href="#" id="brandHome">
+    <span class="wordmark">windyduan</span>
+    <small id="brandSub">个人主页 / 作品 / 兴趣</small>
+  </a>
+  <nav class="nav" id="topNav" aria-label="Main navigation"></nav>
+  <div class="top-actions">
+    <button class="icon-btn" id="langBtn" aria-label="Switch language">EN</button>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg class="icon" id="themeIcon" viewBox="0 0 24 24"></svg>
     </button>
   </div>
 </header>
 
-<main id="top">
-<section class="hero shell">
-  <div class="hero-grid">
-    <div class="reveal">
-      <div class="kicker" id="kicker"></div>
-      <h1><span class="wordmark">windyduan</span><br><span id="headline"></span></h1>
-      <p class="intro" id="intro"></p>
-      <div class="hero-links" id="heroLinks"></div>
-    </div>
+<main class="carousel" id="carousel" aria-label="Portfolio carousel">
+  <section class="slide hero" data-slide="home" aria-label="Home">
+    <div class="shell slide-inner">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="kicker">
+            <svg class="icon" viewBox="0 0 24 24"><path d="m12 3 1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8Z"/></svg>
+            <span id="kickerText"></span>
+          </div>
+          <h1 class="display"><span class="wordmark">windyduan</span><br><span id="headline"></span></h1>
+          <p class="hero-copy" id="intro"></p>
+          <div class="hero-actions" id="heroLinks"></div>
+          <p class="swipe-hint" id="swipeHint"></p>
+        </div>
 
-    <aside class="scrapbook reveal" aria-label="Current interests">
-      <div class="paper back"></div>
-      <div class="paper mid"></div>
-      <div class="paper front">
-        <span class="label">CURRENTLY CURIOUS ABOUT</span>
-        <svg class="doodle" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30"/><path d="M20 61c17-8 37-8 60 0M37 24c9 14 17 35 24 60M63 24c-9 14-17 35-24 60"/></svg>
-        <h2 data-i18n="curiousTitle">Agents, science, tools — and whatever looks interesting.</h2>
-        <p data-i18n="curiousBody">No single label has to explain everything.</p>
-        <div class="interest-cloud"><span class="chip">agents</span><span class="chip">science</span><span class="chip">tools</span><span class="chip">visualization</span><span class="chip">open source</span><span class="chip">side quests</span></div>
+        <aside class="field-card reveal" aria-label="Current exploration">
+          <div class="sheet a"></div>
+          <div class="sheet b"></div>
+          <div class="sheet front">
+            <div class="sheet-label">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-5 2 2-5z"/></svg>
+              NOW EXPLORING
+            </div>
+            <svg class="sheet-visual" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="50" cy="50" r="29"/>
+              <ellipse cx="50" cy="50" rx="42" ry="15"/>
+              <ellipse cx="50" cy="50" rx="42" ry="15" transform="rotate(58 50 50)"/>
+              <circle cx="50" cy="50" r="3" fill="currentColor" stroke="none"/>
+            </svg>
+            <h2 class="display" id="curiousTitle"></h2>
+            <p id="curiousBody"></p>
+            <div class="chips" id="exploreChips"></div>
+          </div>
+        </aside>
       </div>
-    </aside>
-  </div>
-</section>
-
-<section class="shell jump-grid">
-  <a class="jump reveal" href="#work"><b>↓</b><small data-i18n="jump1small">SELECTED WORK</small><h3 data-i18n="jump1title">先看做过的东西</h3><p data-i18n="jump1body">项目不多堆，挑能说明问题的。</p></a>
-  <a class="jump reveal" href="#papers"><b>↓</b><small data-i18n="jump2small">RESEARCH</small><h3 data-i18n="jump2title">论文 / 预印本</h3><p data-i18n="jump2body">以后公开了，就从这里长出来。</p></a>
-  <a class="jump reveal" href="#open-source"><b>↓</b><small data-i18n="jump3small">OPEN SOURCE</small><h3 data-i18n="jump3title">做一些小补充</h3><p data-i18n="jump3body">感谢已有项目和维护者，能补一块就补一块。</p></a>
-</section>
-
-<section class="section shell" id="work">
-  <div class="section-head reveal"><span>01 / WORK</span><div><h2 data-i18n="workTitle">Selected work</h2><p data-i18n="workBody">能公开、能点进去、也能说明我怎么做事的项目。</p></div></div>
-  <div class="project-grid" id="projects"></div>
-</section>
-
-<section class="section shell" id="papers">
-  <div class="section-head reveal"><span>02 / RESEARCH</span><div><h2 data-i18n="papersTitle">Research & publications</h2><p data-i18n="papersBody">这里只放已经适合公开的论文、预印本、海报或项目页；未公开工作不会提前写进主页。</p></div></div>
-  <div class="paper-list reveal" id="publications"></div>
-</section>
-
-<section class="section shell" id="open-source">
-  <div class="section-head reveal"><span>03 / OSS</span><div><h2 data-i18n="ossTitle">Open source</h2><p data-i18n="ossBody">更多时候，我是在别人已经做得很好的项目上补一点小东西。</p></div></div>
-  <div class="contrib-intro reveal" data-i18n="ossThanks"><strong>感谢开源。</strong> 这些贡献建立在维护者和原作者已经完成的大量工作上；这里记录的只是我补上的 bug、文档、验证或小功能。</div>
-  <div class="contrib reveal" id="contributions"></div>
-</section>
-
-<section class="section shell" id="interests">
-  <div class="section-head reveal"><span>04 / INTERESTS</span><div><h2 data-i18n="interestsTitle">Interests</h2><p data-i18n="interestsBody">兴趣可以很多，方向也会变化。下面这些只是目前比较常出现的关键词。</p></div></div>
-  <div class="interests" id="interestGrid"></div>
-</section>
-
-<section class="section shell" id="experience-section" hidden>
-  <div class="section-head reveal"><span>05 / EXPERIENCE</span><div><h2 data-i18n="expTitle">Experience</h2><p data-i18n="expBody">求职时可以把研究、实习和重要经历整理在这里。</p></div></div>
-  <div class="timeline" id="experience"></div>
-</section>
-
-<section class="section shell" id="about">
-  <div class="about reveal">
-    <div>
-      <span class="kicker">ABOUT</span>
-      <h2 data-i18n="aboutTitle">把复杂的东西弄明白一点，再做得顺手一点。</h2>
-      <p data-i18n="aboutBody">我不想让主页替我宣布一个固定身份。研究、工程、agents、科学计算、交互和开源都可能是长期兴趣的一部分。真正重要的是：做过什么、怎么验证、有没有留下能复现和继续讨论的东西。</p>
-      <div class="contact-links" id="contactLinks"></div>
     </div>
-    <aside class="aside-note">
-      <strong data-i18n="noteStrong">A small rule:</strong><br>
-      <span data-i18n="noteText">少一点自我包装，多一点可以点开的证据。</span>
-    </aside>
-  </div>
-</section>
+  </section>
+
+  <section class="slide" data-slide="work" aria-label="Selected work">
+    <div class="shell slide-inner">
+      <div class="section-grid">
+        <aside class="section-side reveal">
+          <div class="section-num">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 6.5h6l2 2h10v9.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
+            01 / WORK
+          </div>
+          <h2 class="display" id="workTitle"></h2>
+          <p id="workBody"></p>
+        </aside>
+        <div class="project-deck" id="projectDeck"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="papers" aria-label="Research and publications">
+    <div class="shell slide-inner">
+      <div class="section-grid">
+        <aside class="section-side reveal">
+          <div class="section-num">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/></svg>
+            02 / RESEARCH
+          </div>
+          <h2 class="display" id="papersTitle"></h2>
+          <p id="papersBody"></p>
+        </aside>
+        <div class="paper-stack reveal" id="publicationDeck"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="oss" aria-label="Open source">
+    <div class="shell slide-inner">
+      <div class="section-grid">
+        <aside class="section-side reveal">
+          <div class="section-num">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M8 5h4a4 4 0 0 1 4 4v8M6 7v8a4 4 0 0 0 4 4h6"/></svg>
+            03 / OSS
+          </div>
+          <h2 class="display" id="ossTitle"></h2>
+          <p id="ossBody"></p>
+        </aside>
+        <div>
+          <div class="oss-note reveal" id="ossThanks"></div>
+          <div class="contrib-list reveal" id="contribDeck"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="interests" aria-label="Interests">
+    <div class="shell slide-inner">
+      <div class="section-grid">
+        <aside class="section-side reveal">
+          <div class="section-num">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-5 2 2-5z"/></svg>
+            04 / INTERESTS
+          </div>
+          <h2 class="display" id="interestsTitle"></h2>
+          <p id="interestsBody"></p>
+        </aside>
+        <div class="interest-board" id="interestBoard"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="profile" aria-label="Profile">
+    <div class="shell slide-inner">
+      <div class="profile-grid">
+        <article class="profile-card reveal">
+          <div class="kicker">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
+            PROFILE
+          </div>
+          <h2 class="display" id="profileTitle"></h2>
+          <p id="profileCopy"></p>
+          <div class="explore-row" id="exploreRow"></div>
+          <div class="profile-links" id="profileLinks"></div>
+          <div class="profile-rule"><strong>A small rule:</strong> <span id="profileRule"></span></div>
+        </article>
+
+        <aside class="cv-card reveal">
+          <div class="cv-head">
+            <span>CV / EXPERIENCE</span>
+            <div class="cv-badge">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3M3 12h18"/></svg>
+            </div>
+          </div>
+          <h3 class="display" id="cvTitle"></h3>
+          <p id="cvBody"></p>
+          <div class="cv-lines"><i class="cv-line"></i><i class="cv-line"></i><i class="cv-line"></i><i class="cv-line"></i></div>
+          <div class="cv-meta" id="profileMeta"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer>
-  <div class="shell footer-row"><span>windyduan · personal page</span><span id="updated"></span></div>
-</footer>
+<nav class="carousel-controls" aria-label="Carousel controls">
+  <button class="arrow" id="prevBtn" aria-label="Previous slide">
+    <svg class="icon" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <div class="track-nav" id="trackNav"></div>
+  <span class="counter" id="counter">01 / 06</span>
+  <button class="arrow" id="nextBtn" aria-label="Next slide">
+    <svg class="icon" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+</nav>
 
 <script src="./site-data.js"></script>
-<script>
-const D=window.PORTFOLIO_DATA;
-let lang=localStorage.getItem('portfolio-lang')||'zh';
-let theme=localStorage.getItem('portfolio-theme')||'light';
-const root=document.documentElement;
-const dict={
-  zh:{
-    brandSub:'个人主页 / 作品 / 兴趣',
-    navWork:'作品',navPapers:'论文',navOss:'开源',navInterests:'兴趣',
-    curiousTitle:'Agents、科学、工具，以及各种看起来有意思的东西。',
-    curiousBody:'不需要用一个标签解释所有兴趣。',
-    jump1small:'SELECTED WORK',jump1title:'先看做过的东西',jump1body:'项目不多堆，挑能说明问题的。',
-    jump2small:'RESEARCH',jump2title:'论文 / 预印本',jump2body:'以后公开了，就从这里长出来。',
-    jump3small:'OPEN SOURCE',jump3title:'做一些小补充',jump3body:'感谢已有项目和维护者，能补一块就补一块。',
-    workTitle:'Selected work',workBody:'能公开、能点进去、也能说明我怎么做事的项目。',
-    papersTitle:'Research & publications',papersBody:'这里只放已经适合公开的论文、预印本、海报或项目页；未公开工作不会提前写进主页。',
-    ossTitle:'Open source',ossBody:'更多时候，我是在别人已经做得很好的项目上补一点小东西。',
-    ossThanks:'<strong>感谢开源。</strong> 这些贡献建立在维护者和原作者已经完成的大量工作上；这里记录的只是我补上的 bug、文档、验证或小功能。',
-    interestsTitle:'Interests',interestsBody:'兴趣可以很多，方向也会变化。下面这些只是目前比较常出现的关键词。',
-    expTitle:'Experience',expBody:'求职时可以把研究、实习和重要经历整理在这里。',
-    aboutTitle:'把复杂的东西弄明白一点，再做得顺手一点。',
-    aboutBody:'我不想让主页替我宣布一个固定身份。研究、工程、agents、科学计算、交互和开源都可能是长期兴趣的一部分。真正重要的是：做过什么、怎么验证、有没有留下能复现和继续讨论的东西。',
-    noteStrong:'一个小原则：',noteText:'少一点自我包装，多一点可以点开的证据。',
-    live:'在线看看',repo:'GitHub',paper:'Paper',code:'Code',project:'Project',poster:'Poster',
-    emptyTitle:'这里先留一页空白。',emptyBody:'等论文、预印本或公开研究成果准备好后，在 <code>site-data.js</code> 的 <code>publications</code> 里加一条，它就会自动出现在这里。',
-    updated:'更新于'
-  },
-  en:{
-    brandSub:'personal page / work / interests',
-    navWork:'Work',navPapers:'Papers',navOss:'Open source',navInterests:'Interests',
-    curiousTitle:'Agents, science, tools — and whatever looks interesting.',
-    curiousBody:'No single label has to explain every interest.',
-    jump1small:'SELECTED WORK',jump1title:'Start with the work',jump1body:'A few projects that actually say something.',
-    jump2small:'RESEARCH',jump2title:'Papers / preprints',jump2body:'Public research will grow here over time.',
-    jump3small:'OPEN SOURCE',jump3title:'Small additions',jump3body:'Grateful for the projects and maintainers that make contributions possible.',
-    workTitle:'Selected work',workBody:'Public, clickable projects that show how I approach problems.',
-    papersTitle:'Research & publications',papersBody:'Only work that is ready to be public goes here: papers, preprints, posters, or project pages.',
-    ossTitle:'Open source',ossBody:'Most contributions are small additions to projects that were already doing the hard work.',
-    ossThanks:'<strong>Grateful for open source.</strong> These contributions build on substantial work by maintainers and original authors; I only document the small fixes, notes, verification, or features I added.',
-    interestsTitle:'Interests',interestsBody:'Interests can be broad and directions change. These are simply the themes that keep recurring right now.',
-    expTitle:'Experience',expBody:'Research, internships, and important roles can be added here when the site is ready for job applications.',
-    aboutTitle:'Understand difficult things a little better, then make them a little easier to use.',
-    aboutBody:'I do not want a homepage to lock me into one identity. Research, engineering, agents, scientific computing, interfaces, and open source can all be part of the picture. What matters more is what was built, how it was checked, and whether there is something others can inspect or reproduce.',
-    noteStrong:'A small rule:',noteText:'Less self-branding. More evidence you can click.',
-    live:'Live',repo:'GitHub',paper:'Paper',code:'Code',project:'Project',poster:'Poster',
-    emptyTitle:'Leaving a blank page here for now.',emptyBody:'When a paper, preprint, or public research artifact is ready, add it to <code>publications</code> in <code>site-data.js</code> and it will appear here automatically.',
-    updated:'Updated'
-  }
-};
-function t(v){return typeof v==='string'?v:(v?.[lang]??v?.en??'')}
-function renderText(){
-  root.lang=lang==='zh'?'zh-CN':'en';
-  document.getElementById('kicker').textContent=t(D.profile.kicker);
-  document.getElementById('headline').textContent=t(D.profile.headline);
-  document.getElementById('intro').textContent=t(D.profile.intro);
-  document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=dict[lang][el.dataset.i18n]||'');
-  document.getElementById('lang').textContent=lang==='zh'?'EN':'中';
-  document.getElementById('updated').textContent=dict[lang].updated+' '+D.profile.lastUpdated;
-}
-function renderLinks(){
-  const hero=document.getElementById('heroLinks'),contact=document.getElementById('contactLinks');
-  const links=[['GitHub',D.profile.github]];
-  if(D.profile.cvUrl)links.push(['CV',D.profile.cvUrl]);
-  if(D.profile.email)links.push(['Email','mailto:'+D.profile.email]);
-  hero.innerHTML='<a class="btn primary" href="#work">'+(lang==='zh'?'看看作品':'See the work')+' →</a>'+links.map(([n,u])=>'<a class="btn" href="'+u+'" target="_blank" rel="noreferrer">'+n+' ↗</a>').join('');
-  contact.innerHTML=links.map(([n,u])=>'<a class="btn" href="'+u+'" target="_blank" rel="noreferrer">'+n+' ↗</a>').join('');
-}
-function renderProjects(){
-  document.getElementById('projects').innerHTML=D.projects.map(p=>`
-    <article class="project reveal" data-accent="${p.accent}">
-      <div class="eyebrow">${p.eyebrow}</div><h3>${p.title}</h3><p>${t(p.summary)}</p>
-      <div class="tags">${p.tags.map(x=>'<span class="tag">'+x+'</span>').join('')}</div>
-      <div class="project-links"><a href="${p.live}" target="_blank" rel="noreferrer">${dict[lang].live} ↗</a><a href="${p.repo}" target="_blank" rel="noreferrer">${dict[lang].repo} ↗</a></div>
-    </article>`).join('');
-}
-function renderPubs(){
-  const box=document.getElementById('publications');
-  if(!D.publications.length){box.innerHTML=`<div class="empty"><div class="empty-icon">⌁</div><div><h3>${dict[lang].emptyTitle}</h3><p>${dict[lang].emptyBody}</p></div></div>`;return}
-  box.innerHTML=D.publications.map(p=>`
-    <article class="pub">
-      <div class="pub-meta"><span>${p.year}</span><span>${p.type}</span></div>
-      <h3>${p.title}</h3><div class="authors">${p.authors}</div><div class="venue">${p.venue}</div><p>${t(p.summary)}</p>
-      <div class="pub-links">${Object.entries(p.links||{}).filter(([,u])=>u).map(([k,u])=>'<a href="'+u+'" target="_blank" rel="noreferrer">'+(dict[lang][k]||k)+' ↗</a>').join('')}</div>
-    </article>`).join('');
-}
-function renderContrib(){
-  document.getElementById('contributions').innerHTML=D.contributions.map(c=>`
-    <a href="${c.url}" target="_blank" rel="noreferrer">
-      <span class="state ${c.status}">${c.status.toUpperCase()}</span><strong>${c.project} ${c.pr}</strong><p>${t(c.note)}</p><span class="go">↗</span>
-    </a>`).join('');
-}
-function renderInterests(){
-  document.getElementById('interestGrid').innerHTML=D.interests.map(i=>`
-    <article class="interest reveal"><b>${i.icon}</b><h3>${t(i.title)}</h3><p>${t(i.note)}</p></article>`).join('');
-}
-function renderExperience(){
-  const section=document.getElementById('experience-section'),box=document.getElementById('experience');
-  if(!D.experience.length){section.hidden=true;return}
-  section.hidden=false;box.innerHTML=D.experience.map(e=>`<article class="exp"><small>${e.period}</small><h3>${t(e.role)} · ${e.org}</h3><p>${t(e.note)}</p></article>`).join('');
-}
-function reveal(){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.07});
-  document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
-}
-function renderAll(){renderText();renderLinks();renderProjects();renderPubs();renderContrib();renderInterests();renderExperience();reveal()}
-const themeBtn=document.getElementById('theme'),themeIcon=document.getElementById('themeIcon');
-const moon='<path d="M21 12.8A8.4 8.4 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/>';
-const sun='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/>';
-function applyTheme(){root.dataset.theme=theme;themeIcon.innerHTML=theme==='light'?moon:sun;document.querySelector('meta[name="theme-color"]').content=theme==='light'?'#f6f1e7':'#232827'}
-themeBtn.onclick=()=>{theme=theme==='light'?'dark':'light';localStorage.setItem('portfolio-theme',theme);applyTheme()};
-document.getElementById('lang').onclick=()=>{lang=lang==='zh'?'en':'zh';localStorage.setItem('portfolio-lang',lang);renderAll()};
-applyTheme();renderAll();
-</script>
+<script src="./app.js"></script>
 </body>
 </html>
