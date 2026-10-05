@@ -1,0 +1,61 @@
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+html{scroll-behavior:smooth}
+body{
+  color:var(--ink);
+  background-color:var(--page);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:14px;
+  line-height:1.75;
+  overflow:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.76' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.032'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
+:root[data-theme="dark"] body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.42;
+  background:
+    radial-gradient(circle at 12% 18%,#bcecff 0 1px,transparent 1.7px) 0 0/190px 170px,
+    radial-gradient(circle at 72% 10%,#ffeeb1 0 1px,transparent 1.7px) 0 0/250px 225px,
+    radial-gradient(circle at 84% 46%,#d9ccff 0 1px,transparent 1.8px) 0 0/300px 280px,
+    radial-gradient(circle at 28% 76%,#b1ead6 0 1px,transparent 1.7px) 0 0/330px 300px;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+svg.icon{
+  width:18px;height:18px;display:block;fill:none;stroke:currentColor;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+}
+.shell{width:min(calc(100% - 42px),var(--max));margin:0 auto}
+.display{
+  font-family:"Iowan Old Style","Palatino Linotype","Songti SC",Georgia,serif;
+  letter-spacing:-.04em;
+  font-weight:650;
+}
+.wordmark{
+  font-weight:860;
+  letter-spacing:-1.7px;
+  line-height:1;
+  background:linear-gradient(90deg,#299fd4,#17b4be,#55ac64,#e7b835,#ed813c,#dd5980,#9d79df,#299fd4);
+  background-size:230% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:rainbow 14s linear infinite;
+}
+.reveal{opacity:0;transform:translateY(12px);transition:.5s ease}
+.reveal.show{opacity:1;transform:none}
+@keyframes rainbow{to{background-position:230% 0}}
+@keyframes explore-card-in{from{opacity:0;transform:translateX(20px) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes explore-progress{from{width:0}to{width:100%}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .wordmark{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  *{scroll-behavior:auto!important}
+}

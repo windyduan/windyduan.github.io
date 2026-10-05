@@ -1,0 +1,80 @@
+.carousel{
+  width:100%;height:100svh;display:flex;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;
+}
+.carousel::-webkit-scrollbar{display:none}
+.slide{
+  --section-a:var(--blue);--section-b:var(--green);
+  position:relative;flex:0 0 100%;width:100%;height:100svh;
+  scroll-snap-align:start;scroll-snap-stop:always;
+  overflow-y:auto;overflow-x:hidden;
+  padding:92px 0 54px;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.slide.fixed{overflow-y:hidden}
+.slide::-webkit-scrollbar{width:8px}
+.slide::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.slide:before,.slide:after{content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%}
+.slide:before{width:470px;height:470px;right:-170px;top:50px;background:radial-gradient(circle,color-mix(in srgb,var(--section-a) 16%,transparent),transparent 69%)}
+.slide:after{width:360px;height:360px;left:-145px;bottom:-40px;background:radial-gradient(circle,color-mix(in srgb,var(--section-b) 10%,transparent),transparent 70%)}
+.slide[data-section="home"]{--section-a:var(--blue);--section-b:var(--pink)}
+.slide[data-section="work"]{--section-a:var(--green);--section-b:var(--blue)}
+.slide[data-section="papers"]{--section-a:var(--yellow);--section-b:var(--violet)}
+.slide[data-section="oss"]{--section-a:var(--orange);--section-b:var(--green)}
+.slide[data-section="interests"]{--section-a:var(--violet);--section-b:var(--cyan)}
+.slide[data-section="profile"]{--section-a:var(--pink);--section-b:var(--yellow)}
+.slide-inner{min-height:calc(100svh - 146px);display:flex;align-items:center}
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,1.03fr) minmax(390px,.97fr);gap:62px;align-items:center;width:100%;
+}
+.content-layout{
+  display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:start;
+  min-height:auto;padding-top:26px;padding-bottom:70px;
+}
+.section-side{position:sticky;top:10px}
+.content-column{min-width:0}
+.project-deck{display:grid;grid-template-columns:1fr;gap:16px}
+.fixed-grid{display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:center;width:100%}
+.interest-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.profile-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:22px;width:100%;align-items:stretch}
+
+@media(max-width:980px){
+  .top-nav button span{display:none}
+  .top-nav button{padding:9px}
+  .brand small{display:none}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .slide.fixed{overflow-y:auto}
+  .slide-inner{min-height:auto;display:block}
+  .explore-stage{min-height:360px;margin-top:22px}
+  .content-layout,.fixed-grid,.profile-grid{grid-template-columns:1fr}
+  .section-side{position:static;margin-bottom:24px}
+  .section-side h2{font-size:36px}
+  .interest-board{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .local-toc{right:10px}
+  .local-label{display:none}
+  .local-toc-list{max-width:none}
+  .local-toc button{padding:6px}
+  .page-dots{right:10px;bottom:10px}
+}
+@media(max-width:620px){
+  .shell{width:min(calc(100% - 26px),var(--max))}
+  .topbar{width:calc(100% - 18px);top:7px;height:54px}
+  .brand .wordmark{font-size:24px}
+  .top-nav{display:none}
+  .slide{padding-top:78px;padding-bottom:46px}
+  .hero-copy-wrap h1{font-size:46px}
+  .hero-copy{font-size:15px;line-height:1.75}
+  .hero-actions{display:grid;grid-template-columns:1fr 1fr}
+  .explore-stage{min-height:330px}
+  .explore-ghost,.explore-card{width:min(94%,360px);min-height:285px}
+  .explore-card{padding:22px}
+  .explore-card h2{font-size:32px;margin-top:24px}
+  .project{grid-template-columns:52px minmax(0,1fr);padding:19px;min-height:280px}
+  .project-icon{width:44px;height:44px}
+  .contrib{grid-template-columns:1fr;gap:7px}
+  .contrib .go{display:none}
+  .interest-board{grid-template-columns:1fr}
+  .profile-card,.cv-card{padding:21px}
+  .profile-card h2{font-size:34px}
+  .page-count{display:none}
+}
