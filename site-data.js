@@ -14,8 +14,8 @@ window.PORTFOLIO_DATA = {
       en: "I build tools, read papers, and occasionally add a small piece to open source."
     },
     intro: {
-      zh: "我对 agents、科学计算、AI for Science、开发者工具、可视化、学习系统，以及各种有趣的软件都感兴趣。这个页面只放我愿意公开的部分；还不能公开的科研，就先认真做。",
-      en: "I am interested in agents, scientific computing, AI for Science, developer tools, visualization, learning systems, and whatever software happens to be interesting. This site only contains work I am comfortable making public."
+      zh: "我经常折腾 agents 和工具链，也对科学计算、AI for Science、开发者工具、可视化、学习系统，以及各种有趣的软件感兴趣。这个页面只放我愿意公开的部分；还不能公开的科研，就先认真做。",
+      en: "I spend a lot of time tinkering with agents and toolchains, and I am also interested in scientific computing, AI for Science, developer tools, visualization, learning systems, and whatever software happens to be interesting. This site only contains work I am comfortable making public."
     }
   },
 
