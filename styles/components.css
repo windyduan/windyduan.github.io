@@ -454,3 +454,25 @@
   text-overflow:ellipsis;
   white-space:nowrap;
 }
+
+.slide[data-section="work"] .section-mark{
+  color:#47754b;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--green) 30%,var(--surface)),color-mix(in srgb,var(--cyan) 8%,var(--surface)));
+  border-color:color-mix(in srgb,var(--line) 64%,var(--green));
+}
+.slide[data-section="papers"] .section-mark{
+  color:var(--link);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--blue) 28%,var(--surface)),color-mix(in srgb,var(--violet) 11%,var(--surface)));
+  border-color:color-mix(in srgb,var(--line) 64%,var(--blue));
+}
+.slide[data-section="oss"] .section-mark{
+  color:#9a5a24;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--orange) 31%,var(--surface)),color-mix(in srgb,var(--yellow) 10%,var(--surface)));
+  border-color:color-mix(in srgb,var(--line) 64%,var(--orange));
+}
+.slide[data-section="interests"] .section-mark{
+  color:#6d56a7;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--violet) 28%,var(--surface)),color-mix(in srgb,var(--pink) 9%,var(--surface)));
+  border-color:color-mix(in srgb,var(--line) 64%,var(--violet));
+}
+:root[data-theme="dark"] .section-mark{color:var(--ink)}
