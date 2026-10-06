@@ -110,6 +110,12 @@ export class HorizontalPager{
     this.indicator.addEventListener("click",()=>this.followHint(),{signal});
   }
 
+  isVerticallyScrollable(slide){
+    if(!slide)return false;
+    if(slide.classList.contains("fixed")&&window.innerWidth>980)return false;
+    return slide.scrollHeight>slide.clientHeight+8;
+  }
+
   onWheel(e){
     this.chrome.moving();
 
@@ -124,7 +130,7 @@ export class HorizontalPager{
     if(absY<12)return;
 
     const slide=this.slides[this.active];
-    const scrollable=slide.scrollHeight>slide.clientHeight+8;
+    const scrollable=this.isVerticallyScrollable(slide);
     const atTop=slide.scrollTop<=1;
     const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-3;
     const direction=e.deltaY>0?1:-1;
@@ -203,7 +209,7 @@ export class HorizontalPager{
 
   updateReadingChrome(){
     const slide=this.slides[this.active];
-    const scrollable=slide?.scrollHeight>slide?.clientHeight+8;
+    const scrollable=this.isVerticallyScrollable(slide);
     const reading=Boolean(scrollable&&slide.scrollTop>34);
     this.chrome.setReading(reading);
   }
@@ -222,7 +228,7 @@ export class HorizontalPager{
     const arrow=this.indicator.querySelector("#direction-arrow");
     if(!slide||!label||!arrow)return;
 
-    const scrollable=slide.scrollHeight>slide.clientHeight+8;
+    const scrollable=this.isVerticallyScrollable(slide);
     const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-3;
 
     if(scrollable&&!atBottom){
