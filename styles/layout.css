@@ -4,33 +4,16 @@
 }
 .carousel::-webkit-scrollbar{display:none}
 .slide{
-  --section-a:var(--blue);--section-b:var(--green);
   position:relative;flex:0 0 100%;width:100%;height:100svh;
   scroll-snap-align:start;scroll-snap-stop:always;
   overflow-y:auto;overflow-x:hidden;
   padding:92px 0 54px;
+  background:transparent;
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
 }
 .slide.fixed{overflow-y:hidden}
 .slide::-webkit-scrollbar{width:8px}
 .slide::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
-.slide:before,.slide:after{content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%}
-.slide:before{
-  width:500px;height:500px;right:-175px;top:42px;
-  background:radial-gradient(circle,color-mix(in srgb,var(--section-a) 29%,transparent),transparent 68%);
-  animation:ambient-drift 12s ease-in-out infinite;
-}
-.slide:after{
-  width:390px;height:390px;left:-145px;bottom:-55px;
-  background:radial-gradient(circle,color-mix(in srgb,var(--section-b) 21%,transparent),transparent 69%);
-  animation:ambient-drift 15s ease-in-out -5s infinite reverse;
-}
-.slide[data-section="home"]{--section-a:var(--blue);--section-b:var(--pink)}
-.slide[data-section="work"]{--section-a:var(--green);--section-b:var(--blue)}
-.slide[data-section="papers"]{--section-a:var(--yellow);--section-b:var(--violet)}
-.slide[data-section="oss"]{--section-a:var(--orange);--section-b:var(--green)}
-.slide[data-section="interests"]{--section-a:var(--violet);--section-b:var(--cyan)}
-.slide[data-section="profile"]{--section-a:var(--pink);--section-b:var(--yellow)}
 .slide-inner{min-height:calc(100svh - 146px);display:flex;align-items:center}
 .hero-grid{
   display:grid;grid-template-columns:minmax(0,1.03fr) minmax(390px,.97fr);gap:62px;align-items:center;width:100%;
