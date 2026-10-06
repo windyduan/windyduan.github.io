@@ -51,14 +51,33 @@ svg.icon{
   color:transparent;
   animation:rainbow 14s linear infinite;
 }
-.reveal{opacity:0;transform:translateY(12px);transition:.5s ease}
-.reveal.show{opacity:1;transform:none}
+.reveal{
+  opacity:0;
+  transform:translateY(18px) scale(.985);
+  filter:saturate(.92);
+  transition:
+    opacity .52s ease,
+    transform .62s cubic-bezier(.16,1,.3,1),
+    filter .5s ease;
+}
+.reveal.show{opacity:1;transform:none;filter:none}
+.project-deck .reveal:nth-child(2),
+.interest-board .reveal:nth-child(2){transition-delay:.06s}
+.interest-board .reveal:nth-child(3){transition-delay:.11s}
+.interest-board .reveal:nth-child(4){transition-delay:.16s}
+.interest-board .reveal:nth-child(5){transition-delay:.21s}
+.interest-board .reveal:nth-child(6){transition-delay:.26s}
 @keyframes rainbow{to{background-position:230% 0}}
-@keyframes explore-card-in{from{opacity:0;transform:translateX(20px) rotate(1deg)}to{opacity:1;transform:none}}
 @keyframes explore-progress{from{width:0}to{width:100%}}
+@keyframes ambient-drift{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(-18px,12px,0) scale(1.05)}
+}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .wordmark{animation:none}
-  .reveal{opacity:1;transform:none;transition:none}
+  .reveal{opacity:1;transform:none;filter:none;transition:none}
+  .explore-space,.slide:before,.slide:after{animation:none!important}
+  .explore-layer,.project,.interest,.profile-card,.cv-card{transition:none!important}
   *{scroll-behavior:auto!important}
 }
