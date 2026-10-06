@@ -15,7 +15,7 @@ const copy={
     cvTitle:"这里以后会放 CV 和经历。",
     cvBody:"等研究、实习、论文和联系方式适合公开时再补。现在先保持简单。",
     live:"在线看看",repo:"GitHub",paper:"Paper",code:"Code",project:"Project",poster:"Poster",
-    updated:"更新于",seeWork:"看看作品",explore:"NOW EXPLORING",profile:"PROFILE"
+    updated:"更新于",seeWork:"看看作品",explore:"NOW EXPLORING",profile:"PROFILE",profileRuleLabel:"小原则："
   },
   en:{
     workTitle:"Selected work",workBody:"Not a repository dump — only a few public projects that show how I approach problems.",
@@ -30,7 +30,7 @@ const copy={
     cvTitle:"CV and experience will live here.",
     cvBody:"Research, internships, papers, and contact details can be added when they are ready to be public.",
     live:"Live",repo:"GitHub",paper:"Paper",code:"Code",project:"Project",poster:"Poster",
-    updated:"Updated",seeWork:"See the work",explore:"NOW EXPLORING",profile:"PROFILE"
+    updated:"Updated",seeWork:"See the work",explore:"NOW EXPLORING",profile:"PROFILE",profileRuleLabel:"A small rule:"
   }
 };
 
@@ -128,22 +128,24 @@ function renderProfile(lang){
   if(meta.cvUrl)links.push(['CV',meta.cvUrl,'briefcase']);
   if(meta.email)links.push(['Email','mailto:'+meta.email,'user']);
   const linkHtml=links.map(([name,url,ico])=>'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noreferrer">'+icon(ico)+esc(name)+'</a>').join("");
-  const experience=siteContent.experience.length
+  const hasExperience=siteContent.experience.length>0;
+  const experience=hasExperience
     ? `<div class="experience-list">${siteContent.experience.map(e=>`<article class="experience content-block" data-toc-item data-toc-label="${esc(t(e.role,lang))}"><small>${esc(e.period)}</small><h4>${esc(t(e.role,lang))} · ${esc(e.org)}</h4><p>${esc(t(e.note,lang))}</p></article>`).join("")}</div>`
     :"";
-  return `<div class="shell slide-inner"><div class="profile-grid">
+  const hasCareerPanel=Boolean(meta.cvUrl||hasExperience);
+  const careerPanel=hasCareerPanel
+    ? `<aside class="cv-card reveal"><div class="cv-head"><span>CV / EXPERIENCE</span><span class="cv-badge">${icon("briefcase")}</span></div><h3 class="display">${copy[lang].cvTitle}</h3><p>${copy[lang].cvBody}</p><div class="cv-meta">${copy[lang].updated} ${esc(meta.updated)}</div></aside>`
+    :"";
+  return `<div class="shell slide-inner"><div class="profile-grid ${hasCareerPanel?"":"single"}">
     <article class="profile-card reveal">
       <div class="kicker">${icon("user")}<span>${copy[lang].profile}</span></div>
       <h2 class="display">${copy[lang].profileTitle}</h2>
       <p>${esc(t(p.about,lang))}</p>
       <div class="profile-links">${linkHtml}</div>
-      <div class="profile-rule"><strong>A small rule:</strong> ${copy[lang].profileRule}</div>
+      <div class="profile-rule"><strong>${copy[lang].profileRuleLabel}</strong> ${copy[lang].profileRule}</div>
       ${experience}
     </article>
-    <aside class="cv-card reveal"><div class="cv-head"><span>CV / EXPERIENCE</span><span class="cv-badge">${icon("briefcase")}</span></div>
-      <h3 class="display">${copy[lang].cvTitle}</h3><p>${copy[lang].cvBody}</p>
-      <div class="cv-lines"><i></i><i></i><i></i><i></i></div><div class="cv-meta">${copy[lang].updated} ${esc(meta.updated)}</div>
-    </aside>
+    ${careerPanel}
   </div></div>`;
 }
 
