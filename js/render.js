@@ -10,10 +10,10 @@ const copy={
     ossTitle:"Open source",ossBody:"更多时候，只是在别人已经做得很好的项目上补一点小东西。",
     ossThanks:"<strong>感谢开源。</strong> 这些贡献建立在维护者和原作者已经完成的大量工作上；这里只记录我补上的 bug、文档、验证或小功能。",
     interestsTitle:"Interests",interestsBody:"兴趣可以很多，方向也会变化。AI / Agents / AI4S 会保留，但它们只是探索方向的一部分。",
-    profileTitle:"留一点安静的地方，放真正值得公开的东西。",
-    profileRule:"少一点自我包装，多一点可以点开的证据。",
-    cvTitle:"这个页面可以慢慢长成求职主页。",
-    cvBody:"等真正需要时，再加 CV、研究经历、实习、报告、论文和联系方式；现在先不替未来的自己编内容。",
+    profileTitle:"关于我",
+    profileRule:"能点开的项目、论文和贡献，比一串形容词更有用。",
+    cvTitle:"这里以后会放 CV 和经历。",
+    cvBody:"等研究、实习、论文和联系方式适合公开时再补。现在先保持简单。",
     live:"在线看看",repo:"GitHub",paper:"Paper",code:"Code",project:"Project",poster:"Poster",
     updated:"更新于",seeWork:"看看作品",explore:"NOW EXPLORING",profile:"PROFILE"
   },
@@ -25,10 +25,10 @@ const copy={
     ossTitle:"Open source",ossBody:"Most of the time, I am only adding a small piece to projects that already did the hard work.",
     ossThanks:"<strong>Grateful for open source.</strong> These contributions build on substantial work by maintainers and original authors; I only document the small fixes, notes, verification, or features I added.",
     interestsTitle:"Interests",interestsBody:"Interests can be broad and directions change. AI / Agents / AI4S stay visible, but they are only part of the exploration.",
-    profileTitle:"A quiet place for the things that are actually worth showing.",
-    profileRule:"less self-branding, more evidence you can click.",
-    cvTitle:"This page can grow into a proper job-search profile.",
-    cvBody:"Add a CV, research experience, internships, talks, publications, and contact details when they are genuinely ready to be public.",
+    profileTitle:"About me",
+    profileRule:"Clickable work, papers, and contributions say more than a list of adjectives.",
+    cvTitle:"CV and experience will live here.",
+    cvBody:"Research, internships, papers, and contact details can be added when they are ready to be public.",
     live:"Live",repo:"GitHub",paper:"Paper",code:"Code",project:"Project",poster:"Poster",
     updated:"Updated",seeWork:"See the work",explore:"NOW EXPLORING",profile:"PROFILE"
   }
@@ -96,11 +96,15 @@ function renderPapers(lang){
 }
 
 function contributionCard(c,lang){
-  return `<a class="contrib content-block" id="oss-${esc(c.id)}" data-toc-item data-toc-label="${esc(c.project+" "+c.pr)}" href="${esc(c.url)}" target="_blank" rel="noreferrer">
-    <span class="state ${esc(c.status)}">${esc(c.status.toUpperCase())}</span>
-    <strong>${esc(c.project)} ${esc(c.pr)}</strong>
-    <p>${esc(t(c.note,lang))}</p><span class="go">↗</span>
-  </a>`;
+  const label=t(c.badge,lang)||c.status.toUpperCase();
+  const ref=c.ref||c.pr||"";
+  const evidence=c.evidenceUrl
+    ? `<a class="evidence-link" href="${esc(c.evidenceUrl)}" target="_blank" rel="noreferrer">${lang==="zh"?"上游记录":"Upstream record"} ↗</a>`
+    : "";
+  return `<article class="contrib content-block" id="oss-${esc(c.id)}" data-toc-item data-toc-label="${esc(c.project+" "+ref)}">
+    <span class="state ${esc(c.status)}">${esc(label)}</span>
+    <div class="contrib-main"><strong>${esc(c.project)} ${esc(ref)}</strong><p>${esc(t(c.note,lang))}</p><div class="contrib-links"><a href="${esc(c.url)}" target="_blank" rel="noreferrer">${lang==="zh"?"原始讨论":"Original"} ↗</a>${evidence}</div></div>
+  </article>`;
 }
 
 function renderOss(lang){
