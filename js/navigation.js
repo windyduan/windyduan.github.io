@@ -3,17 +3,31 @@ import { t } from "./render.js";
 
 class ChromeActivity{
   constructor(topbar,indicator){
+    this.topbar=topbar;
+    this.indicator=indicator;
     this.targets=[topbar,indicator].filter(Boolean);
     this.timer=null;
+    this.reading=false;
   }
   moving(){
     this.targets.forEach(el=>el.classList.add("is-moving"));
     clearTimeout(this.timer);
-    this.timer=setTimeout(()=>this.targets.forEach(el=>el.classList.remove("is-moving")),420);
+    this.timer=setTimeout(()=>{
+      this.targets.forEach(el=>el.classList.remove("is-moving"));
+      this.applyReadingState();
+    },420);
+  }
+  setReading(value){
+    this.reading=Boolean(value);
+    this.applyReadingState();
+  }
+  applyReadingState(){
+    this.topbar?.classList.toggle("is-reading",this.reading);
   }
   destroy(){
     clearTimeout(this.timer);
     this.targets.forEach(el=>el.classList.remove("is-moving"));
+    this.topbar?.classList.remove("is-reading");
   }
 }
 
@@ -56,6 +70,7 @@ export class HorizontalPager{
         this.resetEdgeIntent();
         this.sync();
       }else{
+        this.updateReadingChrome();
         this.updateHint();
       }
     },{passive:true,signal});
@@ -64,6 +79,7 @@ export class HorizontalPager{
       this.chrome.moving();
       if(slide===this.slides[this.active]){
         this.resetEdgeIntent();
+        this.updateReadingChrome();
         this.updateHint();
       }
     },{passive:true,signal}));
@@ -185,11 +201,19 @@ export class HorizontalPager{
     this.chrome.destroy();
   }
 
+  updateReadingChrome(){
+    const slide=this.slides[this.active];
+    const scrollable=slide?.scrollHeight>slide?.clientHeight+8;
+    const reading=Boolean(scrollable&&slide.scrollTop>34);
+    this.chrome.setReading(reading);
+  }
+
   sync(){
     this.slides.forEach((s,i)=>s.classList.toggle("is-active",i===this.active));
     document.querySelectorAll("[data-section-go]").forEach(b=>b.classList.toggle("active",sections[this.active]?.id===b.dataset.sectionGo));
     const count=this.indicator.querySelector("#page-count");
     if(count)count.textContent=String(this.active+1).padStart(2,"0")+" / "+String(this.slides.length).padStart(2,"0");
+    this.updateReadingChrome();
     this.updateHint();
     this.onSectionChange?.(sections[this.active]?.id,this.active);
   }
