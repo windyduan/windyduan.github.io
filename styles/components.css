@@ -4,7 +4,7 @@
   top:14px;
   left:50%;
   transform:translateX(-50%);
-  width:min(calc(100% - 32px),800px);
+  width:min(calc(100% - 32px),920px);
   height:var(--topbar-h);
   display:flex;
   align-items:center;
@@ -235,8 +235,14 @@
   50%{transform:translate3d(0,-8px,0) rotateX(.9deg)}
 }
 
-.section-num{display:flex;align-items:center;gap:7px;font:720 10px ui-monospace,Menlo,monospace;color:var(--muted);letter-spacing:.08em}
-.section-num .icon{width:15px;height:15px}
+.section-mark{
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
+  margin-bottom:10px;
+  color:var(--link);
+  background:color-mix(in srgb,var(--blue) 16%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--line) 82%,var(--blue));
+}
+.section-mark .icon{width:17px;height:17px}
 .section-side h2{font-size:42px;line-height:1.14;margin:10px 0 12px}
 .section-side p{margin:0;color:var(--muted)}
 
@@ -322,6 +328,13 @@
 .interest-icon .icon{width:19px;height:19px}
 .interest h3{font-size:16px;margin:0 0 6px}
 .interest p{margin:0;color:var(--muted);font-size:12px}
+.interest-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}
+.interest-tag{
+  padding:4px 7px;border-radius:7px;
+  background:color-mix(in srgb,var(--surface) 72%,transparent);
+  border:1px solid color-mix(in srgb,var(--line) 80%,currentColor);
+  color:var(--muted);font-size:9px;line-height:1.25
+}
 
 .profile-card,.cv-card{
   border:1px solid color-mix(in srgb,var(--line) 78%,var(--pink));border-radius:21px 26px 20px 25px;
@@ -362,7 +375,6 @@
   opacity:1;transform:translateY(0);
   transition:opacity .18s ease,transform .22s ease;
 }
-.direction-hint .page-count{opacity:.62}
 .direction-copy{white-space:nowrap}
 .direction-arrow{
   position:relative;display:inline-grid;place-items:center;

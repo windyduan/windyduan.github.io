@@ -9,7 +9,7 @@ const copy={
     papersEmptyBody:"还没有适合公开写进主页的论文时，就不硬凑。以后只改 content.js，页面结构不用动。",
     ossTitle:"Open source",ossBody:"更多时候，只是在别人已经做得很好的项目上补一点小东西。",
     ossThanks:"<strong>感谢开源。</strong> 这些贡献建立在维护者和原作者已经完成的大量工作上；这里只记录我补上的 bug、文档、验证或小功能。",
-    interestsTitle:"Interests",interestsBody:"兴趣可以很多，方向也会变化。AI / Agents / AI4S 会保留，但它们只是探索方向的一部分。",
+    interestsTitle:"Directions & interests",interestsBody:"把求职、AI 技术方向和科研兴趣分开看。关键词会变，我更想通过项目和实验确认自己真正会什么。",
     profileTitle:"关于我",
     profileRule:"能点开的项目、论文和贡献，比一串形容词更有用。",
     cvTitle:"这里以后会放 CV 和经历。",
@@ -24,7 +24,7 @@ const copy={
     papersEmptyBody:"If nothing is ready to publish, there is no need to manufacture a publications section. Later, only content.js needs to change.",
     ossTitle:"Open source",ossBody:"Most of the time, I am only adding a small piece to projects that already did the hard work.",
     ossThanks:"<strong>Grateful for open source.</strong> These contributions build on substantial work by maintainers and original authors; I only document the small fixes, notes, verification, or features I added.",
-    interestsTitle:"Interests",interestsBody:"Interests can be broad and directions change. AI / Agents / AI4S stay visible, but they are only part of the exploration.",
+    interestsTitle:"Directions & interests",interestsBody:"I keep job directions, AI topics, and research interests separate. Keywords change; I would rather test what I know through projects and experiments.",
     profileTitle:"About me",
     profileRule:"Clickable work, papers, and contributions say more than a list of adjectives.",
     cvTitle:"CV and experience will live here.",
@@ -37,8 +37,8 @@ const copy={
 export function t(value,lang){return typeof value==="string"?value:(value?.[lang]??value?.en??"")}
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
-function sectionLead(number,iconName,title,body){
-  return '<aside class="section-side reveal"><div class="section-num">'+icon(iconName)+number+'</div><h2 class="display">'+title+'</h2><p>'+body+'</p></aside>';
+function sectionLead(iconName,title,body){
+  return '<aside class="section-side reveal"><span class="section-mark">'+icon(iconName)+'</span><h2 class="display">'+title+'</h2><p>'+body+'</p></aside>';
 }
 
 function renderHome(lang){
@@ -73,7 +73,7 @@ function projectCard(project,lang){
 
 function renderWork(lang){
   return `<div class="shell slide-inner content-layout">
-    ${sectionLead("01 / WORK","folder",copy[lang].workTitle,copy[lang].workBody)}
+    ${sectionLead("folder",copy[lang].workTitle,copy[lang].workBody)}
     <div class="content-column project-deck">${siteContent.projects.map(p=>projectCard(p,lang)).join("")}</div>
   </div>`;
 }
@@ -93,7 +93,7 @@ function renderPapers(lang){
     ? siteContent.publications.map(p=>publicationCard(p,lang)).join("")
     : `<div class="paper-empty"><div class="paper-empty-card"><div class="paper-empty-icon">${icon("file")}</div><h3 class="display">${copy[lang].papersEmptyTitle}</h3><p>${copy[lang].papersEmptyBody}</p></div></div>`;
   return `<div class="shell slide-inner content-layout">
-    ${sectionLead("02 / RESEARCH","file",copy[lang].papersTitle,copy[lang].papersBody)}
+    ${sectionLead("file",copy[lang].papersTitle,copy[lang].papersBody)}
     <div class="content-column paper-stack">${content}</div>
   </div>`;
 }
@@ -112,15 +112,18 @@ function contributionCard(c,lang){
 
 function renderOss(lang){
   return `<div class="shell slide-inner content-layout">
-    ${sectionLead("03 / OSS","git",copy[lang].ossTitle,copy[lang].ossBody)}
+    ${sectionLead("git",copy[lang].ossTitle,copy[lang].ossBody)}
     <div class="content-column"><div class="oss-note reveal">${copy[lang].ossThanks}</div><div class="contrib-list">${siteContent.contributions.map(c=>contributionCard(c,lang)).join("")}</div></div>
   </div>`;
 }
 
 function renderInterests(lang){
-  const cards=siteContent.interests.map(i=>`<article class="interest reveal"><span class="interest-icon">${icon(i.icon)}</span><h3>${esc(t(i.title,lang))}</h3><p>${esc(t(i.note,lang))}</p></article>`).join("");
+  const cards=siteContent.interests.map(i=>{
+    const tags=(i.tags||[]).map(tag=>'<span class="interest-tag">'+esc(tag)+'</span>').join("");
+    return `<article class="interest reveal"><span class="interest-icon">${icon(i.icon)}</span><h3>${esc(t(i.title,lang))}</h3><p>${esc(t(i.note,lang))}</p><div class="interest-tags">${tags}</div></article>`;
+  }).join("");
   return `<div class="shell slide-inner"><div class="fixed-grid">
-    ${sectionLead("04 / INTERESTS","compass",copy[lang].interestsTitle,copy[lang].interestsBody)}
+    ${sectionLead("compass",copy[lang].interestsTitle,copy[lang].interestsBody)}
     <div class="interest-board">${cards}</div>
   </div></div>`;
 }
@@ -164,7 +167,7 @@ export function renderSite(lang){
 }
 
 export function renderTopbar(lang){
-  document.getElementById("brand-sub").textContent=lang==="zh"?"个人主页 / 作品 / 兴趣":"personal page / work / interests";
+  document.getElementById("brand-sub").textContent=lang==="zh"?"作品 · 研究 · 兴趣":"work · research · notes";
   document.getElementById("top-nav").innerHTML=sections.map(s=>`<button type="button" data-section-go="${s.id}">${icon(s.icon)}<span>${esc(t(s.label,lang))}</span></button>`).join("");
 }
 
