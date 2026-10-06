@@ -54,7 +54,7 @@
   .local-label{display:none}
   .local-toc-list{max-width:none}
   .local-toc button{padding:6px}
-  .page-dots{right:10px;bottom:10px}
+  .direction-hint{right:12px;bottom:12px}
 }
 @media(max-width:620px){
   .shell{width:min(calc(100% - 26px),var(--max))}
@@ -71,10 +71,9 @@
   .explore-card h2{font-size:32px;margin-top:24px}
   .project{grid-template-columns:52px minmax(0,1fr);padding:19px;min-height:280px}
   .project-icon{width:44px;height:44px}
-  .contrib{grid-template-columns:1fr;gap:7px}
-  .contrib .go{display:none}
+  .contrib{grid-template-columns:1fr;gap:9px}
   .interest-board{grid-template-columns:1fr}
   .profile-card,.cv-card{padding:21px}
   .profile-card h2{font-size:34px}
-  .page-count{display:none}
+  .direction-hint .page-count{display:none}
 }
