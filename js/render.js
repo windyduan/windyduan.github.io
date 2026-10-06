@@ -167,7 +167,7 @@ export function renderSite(lang){
 }
 
 export function renderTopbar(lang){
-  document.getElementById("brand-sub").textContent=lang==="zh"?"个人主页 / 作品 / 兴趣":"personal page / work / interests";
+  document.getElementById("brand-sub").textContent=lang==="zh"?"作品 · 研究 · 兴趣":"work · research · notes";
   document.getElementById("top-nav").innerHTML=sections.map(s=>`<button type="button" data-section-go="${s.id}">${icon(s.icon)}<span>${esc(t(s.label,lang))}</span></button>`).join("");
 }
 
