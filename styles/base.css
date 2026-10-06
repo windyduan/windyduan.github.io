@@ -4,7 +4,7 @@ html{scroll-behavior:smooth}
 body{
   color:var(--ink);
   background-color:var(--page);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-family:"Instrument Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   font-size:14px;
   line-height:1.75;
   overflow:hidden;
@@ -36,9 +36,10 @@ svg.icon{
 }
 .shell{width:min(calc(100% - 42px),var(--max));margin:0 auto}
 .display{
-  font-family:"Iowan Old Style","Palatino Linotype","Songti SC",Georgia,serif;
-  letter-spacing:-.04em;
-  font-weight:650;
+  font-family:"Newsreader","Songti SC","Noto Serif SC","Iowan Old Style",Georgia,serif;
+  font-optical-sizing:auto;
+  letter-spacing:-.025em;
+  font-weight:600;
 }
 .wordmark{
   font-weight:860;
