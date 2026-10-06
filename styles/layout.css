@@ -1,6 +1,6 @@
 .carousel{
   width:100%;height:100svh;display:flex;overflow-x:auto;overflow-y:hidden;
-  scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;scroll-padding-inline:0;
 }
 .carousel::-webkit-scrollbar{display:none}
 .slide{
@@ -15,8 +15,8 @@
 .slide::-webkit-scrollbar{width:8px}
 .slide::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
 .slide:before,.slide:after{content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%}
-.slide:before{width:470px;height:470px;right:-170px;top:50px;background:radial-gradient(circle,color-mix(in srgb,var(--section-a) 16%,transparent),transparent 69%)}
-.slide:after{width:360px;height:360px;left:-145px;bottom:-40px;background:radial-gradient(circle,color-mix(in srgb,var(--section-b) 10%,transparent),transparent 70%)}
+.slide:before{width:470px;height:470px;right:-170px;top:50px;background:radial-gradient(circle,color-mix(in srgb,var(--section-a) 21%,transparent),transparent 69%)}
+.slide:after{width:360px;height:360px;left:-145px;bottom:-40px;background:radial-gradient(circle,color-mix(in srgb,var(--section-b) 14%,transparent),transparent 70%)}
 .slide[data-section="home"]{--section-a:var(--blue);--section-b:var(--pink)}
 .slide[data-section="work"]{--section-a:var(--green);--section-b:var(--blue)}
 .slide[data-section="papers"]{--section-a:var(--yellow);--section-b:var(--violet)}

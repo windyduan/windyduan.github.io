@@ -1,73 +1,190 @@
 import { sections } from "../data/content.js";
-import { icon } from "./icons.js";
 import { t } from "./render.js";
 
 class ChromeActivity{
-  constructor(topbar){this.topbar=topbar;this.timer=null}
+  constructor(topbar,indicator){
+    this.targets=[topbar,indicator].filter(Boolean);
+    this.timer=null;
+  }
   moving(){
-    this.topbar.classList.add("is-moving");
+    this.targets.forEach(el=>el.classList.add("is-moving"));
     clearTimeout(this.timer);
-    this.timer=setTimeout(()=>this.topbar.classList.remove("is-moving"),520);
+    this.timer=setTimeout(()=>this.targets.forEach(el=>el.classList.remove("is-moving")),560);
+  }
+  destroy(){
+    clearTimeout(this.timer);
+    this.targets.forEach(el=>el.classList.remove("is-moving"));
   }
 }
 
 export class HorizontalPager{
   constructor({carousel,topbar,indicator,lang="zh",onSectionChange}){
-    this.carousel=carousel;this.topbar=topbar;this.indicator=indicator;this.lang=lang;this.onSectionChange=onSectionChange;
-    this.slides=[...carousel.querySelectorAll(".slide")];this.active=0;this.wheelLock=false;this.chrome=new ChromeActivity(topbar);
+    this.carousel=carousel;
+    this.topbar=topbar;
+    this.indicator=indicator;
+    this.lang=lang;
+    this.onSectionChange=onSectionChange;
+    this.slides=[...carousel.querySelectorAll(".slide")];
+    this.active=0;
+    this.wheelLock=false;
+    this.edgeIntent={direction:0,total:0,lastAt:0};
+    this.chrome=new ChromeActivity(topbar,indicator);
     this.abort=new AbortController();
-    this.renderIndicator();this.bind();this.sync();
+    this.renderIndicator();
+    this.bind();
+    this.sync();
   }
-  setLanguage(lang){this.lang=lang;this.renderIndicator();this.sync()}
+
+  setLanguage(lang){
+    this.lang=lang;
+    this.renderIndicator();
+    this.sync();
+  }
+
   renderIndicator(){
     this.indicator.innerHTML='<span class="page-count" id="page-count"></span><span class="direction-copy" id="direction-copy"></span><span class="direction-arrow" id="direction-arrow">→</span>';
   }
+
   bind(){
-    const opt={signal:this.abort.signal};
+    const signal=this.abort.signal;
+
     this.carousel.addEventListener("scroll",()=>{
       this.chrome.moving();
       const i=Math.round(this.carousel.scrollLeft/Math.max(1,this.carousel.clientWidth));
-      if(i!==this.active){this.active=i;this.sync()}else this.updateHint();
-    },{passive:true,signal:this.abort.signal});
-    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>{this.chrome.moving();if(slide===this.slides[this.active])this.updateHint()},{passive:true,signal:this.abort.signal}));
-    this.carousel.addEventListener("touchmove",()=>this.chrome.moving(),{passive:true,signal:this.abort.signal});
+      if(i!==this.active){
+        this.active=i;
+        this.resetEdgeIntent();
+        this.sync();
+      }else{
+        this.updateHint();
+      }
+    },{passive:true,signal});
+
+    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>{
+      this.chrome.moving();
+      if(slide===this.slides[this.active]){
+        this.resetEdgeIntent();
+        this.updateHint();
+      }
+    },{passive:true,signal}));
+
+    this.carousel.addEventListener("touchmove",()=>{
+      this.chrome.moving();
+      this.resetEdgeIntent();
+    },{passive:true,signal});
+
     window.addEventListener("keydown",e=>{
-      if(["INPUT","TEXTAREA"].includes(document.activeElement?.tagName))return;
+      if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;
       if(e.key==="ArrowRight"){e.preventDefault();this.go(this.active+1)}
       if(e.key==="ArrowLeft"){e.preventDefault();this.go(this.active-1)}
-      if(e.key==="Home")this.go(0);
-      if(e.key==="End")this.go(this.slides.length-1);
-    },opt);
-    this.carousel.addEventListener("wheel",e=>this.onWheel(e),{passive:false,signal:this.abort.signal});
+      if(e.key==="Home"){e.preventDefault();this.go(0)}
+      if(e.key==="End"){e.preventDefault();this.go(this.slides.length-1)}
+    },{signal});
+
+    this.carousel.addEventListener("wheel",e=>this.onWheel(e),{passive:false,signal});
+
     document.addEventListener("click",e=>{
       const target=e.target.closest("[data-section-go]");
       if(!target)return;
       const id=target.dataset.sectionGo;
       const i=sections.findIndex(s=>s.id===id);
       if(i>=0)this.go(i);
-    },opt);
+    },{signal});
+
+    this.indicator.addEventListener("click",()=>this.followHint(),{signal});
   }
+
   onWheel(e){
     this.chrome.moving();
-    if(this.wheelLock||Math.abs(e.deltaY)<20||Math.abs(e.deltaY)<Math.abs(e.deltaX))return;
-    const slide=this.slides[this.active];
-    const scrollable=slide.scrollHeight>slide.clientHeight+4;
-    if(scrollable){
-      const atTop=slide.scrollTop<=1;
-      const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-2;
-      if(!((e.deltaY>0&&atBottom)||(e.deltaY<0&&atTop)))return;
+
+    const absX=Math.abs(e.deltaX);
+    const absY=Math.abs(e.deltaY);
+
+    // Trackpads with a clear horizontal gesture should keep native horizontal scrolling.
+    if(absX>absY*1.15){
+      this.resetEdgeIntent();
+      return;
     }
+    if(absY<12)return;
+
+    const slide=this.slides[this.active];
+    const scrollable=slide.scrollHeight>slide.clientHeight+8;
+    const atTop=slide.scrollTop<=1;
+    const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-3;
+    const direction=e.deltaY>0?1:-1;
+
+    // Vertical reading always wins while there is content left in that direction.
+    if(scrollable&&!((direction>0&&atBottom)||(direction<0&&atTop))){
+      this.resetEdgeIntent();
+      return;
+    }
+
+    if((direction<0&&this.active===0)||(direction>0&&this.active===this.slides.length-1)){
+      this.resetEdgeIntent();
+      return;
+    }
+
     e.preventDefault();
-    this.wheelLock=true;this.go(this.active+(e.deltaY>0?1:-1));
-    setTimeout(()=>this.wheelLock=false,650);
+    if(this.wheelLock)return;
+
+    // On long pages, require a little extra "overscroll intent" at the edge so
+    // reaching the end of an article never instantly throws the reader sideways.
+    const now=performance.now();
+    if(this.edgeIntent.direction!==direction||now-this.edgeIntent.lastAt>340){
+      this.edgeIntent={direction,total:0,lastAt:now};
+    }
+    this.edgeIntent.direction=direction;
+    this.edgeIntent.total+=absY;
+    this.edgeIntent.lastAt=now;
+
+    const threshold=scrollable?150:70;
+    if(this.edgeIntent.total<threshold){
+      this.updateHint();
+      return;
+    }
+
+    this.resetEdgeIntent();
+    this.wheelLock=true;
+    this.go(this.active+direction);
+    setTimeout(()=>this.wheelLock=false,620);
   }
+
+  resetEdgeIntent(){
+    this.edgeIntent={direction:0,total:0,lastAt:0};
+  }
+
+  followHint(){
+    const direction=this.indicator.dataset.direction;
+    const slide=this.slides[this.active];
+    if(direction==="down"){
+      this.chrome.moving();
+      slide.scrollBy({
+        top:Math.max(320,slide.clientHeight*.72),
+        behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"
+      });
+    }else if(direction==="right"){
+      this.go(this.active+1);
+    }
+  }
+
   go(i){
     const next=Math.max(0,Math.min(this.slides.length-1,i));
-    this.active=next;this.chrome.moving();
-    this.slides[next].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",inline:"start",block:"nearest"});
+    this.active=next;
+    this.resetEdgeIntent();
+    this.chrome.moving();
+    this.slides[next].scrollIntoView({
+      behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",
+      inline:"start",
+      block:"nearest"
+    });
     this.sync();
   }
-  destroy(){this.abort.abort();clearTimeout(this.chrome.timer)}
+
+  destroy(){
+    this.abort.abort();
+    this.chrome.destroy();
+  }
+
   sync(){
     this.slides.forEach((s,i)=>s.classList.toggle("is-active",i===this.active));
     document.querySelectorAll("[data-section-go]").forEach(b=>b.classList.toggle("active",sections[this.active]?.id===b.dataset.sectionGo));
@@ -76,25 +193,34 @@ export class HorizontalPager{
     this.updateHint();
     this.onSectionChange?.(sections[this.active]?.id,this.active);
   }
+
   updateHint(){
     const slide=this.slides[this.active];
     const label=this.indicator.querySelector("#direction-copy");
     const arrow=this.indicator.querySelector("#direction-arrow");
     if(!slide||!label||!arrow)return;
+
     const scrollable=slide.scrollHeight>slide.clientHeight+8;
     const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-3;
+
     if(scrollable&&!atBottom){
       label.textContent=this.lang==="zh"?"向下滚动":"scroll down";
       arrow.textContent="↓";
       this.indicator.dataset.direction="down";
+      this.indicator.disabled=false;
+      this.indicator.setAttribute("aria-label",this.lang==="zh"?"向下阅读当前章节":"Scroll down in this section");
     }else if(this.active<this.slides.length-1){
-      label.textContent=this.lang==="zh"?(innerWidth<900?"左右滑动":"继续滚动"):(innerWidth<900?"swipe":"keep scrolling");
+      label.textContent=this.lang==="zh"?(innerWidth<900?"左滑 · 下一页":"滚动 · 下一页"):(innerWidth<900?"swipe · next":"scroll · next");
       arrow.textContent="→";
       this.indicator.dataset.direction="right";
+      this.indicator.disabled=false;
+      this.indicator.setAttribute("aria-label",this.lang==="zh"?"前往下一页":"Go to next section");
     }else{
       label.textContent=this.lang==="zh"?"到这里啦":"end";
       arrow.textContent="·";
       this.indicator.dataset.direction="end";
+      this.indicator.disabled=true;
+      this.indicator.setAttribute("aria-label",this.lang==="zh"?"已经到最后一页":"End of portfolio");
     }
   }
 }
