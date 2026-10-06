@@ -38,7 +38,7 @@ export function t(value,lang){return typeof value==="string"?value:(value?.[lang
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
 function sectionLead(iconName,title,body){
-  return '<aside class="section-side reveal"><span class="section-mark">'+icon(iconName)+'</span><h2 class="display">'+title+'</h2><p>'+body+'</p></aside>';
+  return '<aside class="section-side reveal"><div class="section-heading"><span class="section-mark">'+icon(iconName)+'</span><h2 class="display">'+title+'</h2></div><p>'+body+'</p></aside>';
 }
 
 function renderHome(lang){
