@@ -268,8 +268,8 @@ export class LocalTocManager{
       toc.innerHTML='<div class="local-progress"><i></i></div><div class="local-toc-list">'+items.map((el,i)=>'<button type="button" data-local-go="'+i+'"><span class="local-dot"></span><span class="local-label">'+el.dataset.tocLabel+'</span></button>').join("")+'</div>';
       slide.appendChild(toc);
       toc.querySelectorAll("[data-local-go]").forEach(b=>b.onclick=()=>{
-        const item=items[Number(b.dataset.localGo)];
-        item.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
+        const index=Number(b.dataset.localGo);
+        this.scrollToItem(slide,items,index);
       });
       const update=()=>this.update(slide,toc,items);
       slide.addEventListener("scroll",update,{passive:true});
@@ -277,13 +277,34 @@ export class LocalTocManager{
       requestAnimationFrame(update);
     });
   }
+  scrollToItem(slide,items,index){
+    const item=items[index];
+    if(!item)return;
+    const max=Math.max(0,slide.scrollHeight-slide.clientHeight);
+    let target=0;
+    if(index===items.length-1){
+      target=max;
+    }else if(index>0){
+      const slideRect=slide.getBoundingClientRect();
+      const itemRect=item.getBoundingClientRect();
+      const itemTop=slide.scrollTop+(itemRect.top-slideRect.top);
+      const centered=itemTop-(slide.clientHeight-itemRect.height)*0.42;
+      target=Math.min(max,Math.max(0,centered));
+    }
+    slide.scrollTo({top:target,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  }
   update(slide,toc,items){
-    const max=Math.max(1,slide.scrollHeight-slide.clientHeight);
-    const progress=Math.min(1,Math.max(0,slide.scrollTop/max));
+    const max=Math.max(0,slide.scrollHeight-slide.clientHeight);
+    const progress=max===0?0:Math.min(1,Math.max(0,slide.scrollTop/max));
     toc.style.setProperty("--local-progress",(progress*100)+"%");
-    const anchor=slide.getBoundingClientRect().top+slide.clientHeight*.43;
-    let active=0,best=Infinity;
-    items.forEach((item,i)=>{const d=Math.abs(item.getBoundingClientRect().top-anchor);if(d<best){best=d;active=i}});
+    let active=0;
+    if(progress>=.995){
+      active=items.length-1;
+    }else if(progress>.005){
+      const anchor=slide.getBoundingClientRect().top+slide.clientHeight*.43;
+      let best=Infinity;
+      items.forEach((item,i)=>{const d=Math.abs(item.getBoundingClientRect().top-anchor);if(d<best){best=d;active=i}});
+    }
     toc.querySelectorAll("button").forEach((b,i)=>b.classList.toggle("active",i===active));
   }
   destroy(){
