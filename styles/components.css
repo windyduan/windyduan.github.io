@@ -16,15 +16,22 @@
   backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);
   box-shadow:0 5px 18px #3e30250a;
-  transition:width .28s ease,height .28s ease,top .28s ease,border-radius .28s ease,padding .28s ease,background .28s ease,box-shadow .28s ease;
+  transition:
+    width .22s cubic-bezier(.16,1,.3,1),
+    height .22s cubic-bezier(.16,1,.3,1),
+    top .22s cubic-bezier(.16,1,.3,1),
+    border-radius .22s cubic-bezier(.16,1,.3,1),
+    padding .22s cubic-bezier(.16,1,.3,1),
+    background .18s ease,
+    box-shadow .18s ease;
 }
 .topbar:after{
   content:"";
   position:absolute;left:18px;right:18px;bottom:-1px;height:2px;border-radius:99px;opacity:.72;
   background:linear-gradient(90deg,#339ed8,#24bbc4,#59af62,#e6bf3c,#ed853e,#e36564,#d45d89);
-  transition:all .28s ease;
+  transition:all .2s cubic-bezier(.16,1,.3,1);
 }
-.topbar>*{transition:opacity .16s ease,transform .22s ease}
+.topbar>*{transition:opacity .12s ease,transform .18s cubic-bezier(.16,1,.3,1)}
 .topbar.is-moving{
   top:7px;
   width:96px;
@@ -34,9 +41,11 @@
   background:color-mix(in srgb,var(--surface) 75%,transparent);
   box-shadow:0 3px 12px #3e30250a;
   pointer-events:none;
+  transition-duration:.13s;
+  transition-timing-function:cubic-bezier(.4,0,.2,1);
 }
-.topbar.is-moving>*{opacity:0;transform:translateY(-8px)}
-.topbar.is-moving:after{left:5px;right:5px;bottom:4px;height:3px;opacity:.95}
+.topbar.is-moving>*{opacity:0;transform:translateY(-6px);transition-duration:.09s}
+.topbar.is-moving:after{left:5px;right:5px;bottom:4px;height:3px;opacity:.95;transition-duration:.13s}
 .brand{display:flex;align-items:baseline;gap:9px;margin-right:auto;min-width:0}
 .brand .wordmark{font-size:27px}
 .brand small{font-size:10px;color:var(--muted);white-space:nowrap}
@@ -250,7 +259,10 @@
 .local-toc{
   --toc-color:var(--blue);
   --local-progress:0%;
-  position:fixed;z-index:72;right:18px;top:50%;transform:translateY(-50%) translateX(8px);
+  position:fixed;z-index:72;
+  right:max(22px,calc((100vw - var(--max))/2 + 10px));
+  top:50%;transform:translateY(-50%) translateX(6px);
+  width:152px;
   display:flex;gap:9px;align-items:stretch;padding:11px 10px;border:1px solid var(--line);border-radius:16px;
   background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:blur(12px);box-shadow:0 4px 18px #3e30250a;
   opacity:0;pointer-events:none;transition:.2s opacity,.2s transform;
@@ -261,11 +273,18 @@
 .slide[data-section="oss"] .local-toc{--toc-color:var(--orange)}
 .local-progress{position:relative;width:3px;min-height:82px;border-radius:99px;background:var(--surface-3);overflow:hidden}
 .local-progress i{display:block;width:100%;height:var(--local-progress);border-radius:inherit;background:var(--toc-color);transition:height .12s linear}
-.local-toc-list{display:grid;align-content:center;gap:4px;max-width:160px}
+.local-toc-list{display:grid;align-content:center;gap:4px;min-width:0;flex:1}
 .local-toc button{
   border:0;background:none;cursor:pointer;padding:5px 7px;border-radius:8px;display:flex;align-items:center;gap:7px;
-  text-align:left;color:var(--muted);font-size:10px;line-height:1.3;
+  text-align:left;color:var(--muted);font-size:10px;line-height:1.3;min-width:0;
 }
 .local-toc button:hover,.local-toc button.active{color:var(--ink);background:color-mix(in srgb,var(--toc-color) 17%,var(--surface))}
 .local-dot{width:6px;height:6px;border-radius:50%;background:var(--line);flex:0 0 auto}
 .local-toc button.active .local-dot{background:var(--toc-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--toc-color) 25%,transparent)}
+
+.local-label{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}

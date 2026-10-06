@@ -9,7 +9,7 @@ class ChromeActivity{
   moving(){
     this.targets.forEach(el=>el.classList.add("is-moving"));
     clearTimeout(this.timer);
-    this.timer=setTimeout(()=>this.targets.forEach(el=>el.classList.remove("is-moving")),560);
+    this.timer=setTimeout(()=>this.targets.forEach(el=>el.classList.remove("is-moving")),420);
   }
   destroy(){
     clearTimeout(this.timer);
