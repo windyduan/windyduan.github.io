@@ -63,8 +63,10 @@
   .brand .wordmark{font-size:24px}
   .top-nav{display:none}
   .slide{padding-top:78px;padding-bottom:46px}
-  .hero-copy-wrap h1{font-size:46px}
-  .hero-copy{font-size:15px;line-height:1.75}
+  .hero-name{font-size:30px}
+  .hero-greeting{font-size:16px}
+  .hero-title{font-size:32px;line-height:1.2}
+  .hero-copy{font-size:14.5px;line-height:1.75}
   .hero-actions{display:grid;grid-template-columns:1fr 1fr}
   .explore-stage{min-height:330px}
   .explore-ghost,.explore-card{width:min(94%,360px);min-height:285px}
