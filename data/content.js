@@ -8,20 +8,20 @@ export const siteContent = {
 
   profile: {
     kicker: {
-      zh: "保持好奇，慢慢做东西。",
-      en: "Stay curious. Keep making things."
+      zh: "嗨，我是 windyduan。",
+      en: "Hi, I’m windyduan."
     },
     headline: {
-      zh: "读论文，写代码，也常常被新东西吸引。",
-      en: "I read papers, write code, and get curious about new things."
+      zh: "喜欢把新东西拆开看看，再顺手做点东西。",
+      en: "I like taking new things apart and making something along the way."
     },
     intro: {
-      zh: "我会认真试很多方向。这里不急着给自己下定义，只留下真正做过、学过、验证过的东西。",
-      en: "I like trying different directions seriously. This page is less about defining an identity and more about leaving behind things I have actually built, learned, or tested."
+      zh: "论文、代码、agents、科学、系统、创作——好奇什么就学一点，也尽量留下些什么。",
+      en: "Papers, code, agents, science, systems, creative work — I follow what interests me and try to leave something useful behind."
     },
     about: {
-      zh: "我喜欢先把新东西拆开看，再写点代码、做个小实验，或者给已有项目补上一小块。方向会变，兴趣可以很多；重要的是保持好奇，并尽量把学到的东西变成可以验证、可以讨论的东西。",
-      en: "I like taking new things apart, writing a little code, running a small experiment, or adding one useful piece to an existing project. Directions change and interests can be broad; what matters is staying curious and turning learning into something inspectable and discussable."
+      zh: "我现在还在找最适合长期做的方向。平时会折腾 agents，也会补具身智能、AI Infra、AI for Science、ML systems 和创作工具；碰到完全不相干但有意思的东西，也很容易被带跑。比起先给自己贴标签，我更习惯做个小项目、写点代码、提个 issue，看看自己到底理解到了哪一步。",
+      en: "I’m still figuring out which directions I want to stay with for the long run. I spend time on agents and also learn about embodied AI, AI infrastructure, AI for Science, ML systems, and creative tools. I’m equally happy to get distracted by something unrelated if it looks interesting. I prefer testing what I understand by building, writing code, or opening an issue before putting a label on it."
     }
   },
 
@@ -100,30 +100,55 @@ export const siteContent = {
 
   contributions: [
     {
-      id: "dsh-lifecycle", status: "merged",
-      project: "NativeDog1/dsh-boot-animation", pr: "#2",
+      id: "dsh-conversation-override",
+      status: "adopted",
+      badge: { zh: "上游采纳", en: "ADOPTED" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "issue #3",
+      url: "https://github.com/NativeDog1/dsh-boot-animation/issues/3",
+      evidenceUrl: "https://github.com/NativeDog1/dsh-boot-animation/blob/main/CHANGELOG.md#040--2026-09-30",
+      note: {
+        zh: "讨论 conversation-level override 的方向；上游 0.4.0 按这个思路落地，并在 CHANGELOG 里注明来自 issue #3（@windyduan）。",
+        en: "Proposed a conversation-level override direction; upstream 0.4.0 implemented it and credits issue #3 (@windyduan) in the changelog."
+      }
+    },
+    {
+      id: "dsh-lifecycle",
+      status: "merged",
+      badge: { zh: "已合并", en: "MERGED" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "PR #2",
       url: "https://github.com/NativeDog1/dsh-boot-animation/pull/2",
+      evidenceUrl: "https://github.com/NativeDog1/dsh-boot-animation/blob/main/CHANGELOG.md#030--2026-09-29",
       note: {
-        zh: "在已有实现上补了几个客户端生命周期问题：媒体释放、clip 版本刷新和 session identity。",
-        en: "Small client-lifecycle fixes on top of the existing project: media cleanup, clip-version refresh, and session identity."
+        zh: "补了媒体卸载、clip 版本刷新和 session identity 三个客户端生命周期问题；PR 已合并，上游 0.3.0 CHANGELOG 单独记录了这次社区贡献。",
+        en: "Fixed media teardown, clip-version refresh, and session identity issues. The PR was merged and upstream 0.3.0 records the community contribution separately."
       }
     },
     {
-      id: "dsh-session-memory", status: "open",
-      project: "NativeDog1/dsh-boot-animation", pr: "#4",
-      url: "https://github.com/NativeDog1/dsh-boot-animation/pull/4",
-      note: {
-        zh: "补充 per-session clip 记忆，同时保留旧数据兼容和 fallback。",
-        en: "Added per-session clip memory while preserving backward compatibility and fallbacks."
-      }
-    },
-    {
-      id: "pv-60fps", status: "open",
-      project: "MisakaZentai/world-execute-me-dsh-pv", pr: "#5",
+      id: "pv-60fps",
+      status: "merged",
+      badge: { zh: "已合并", en: "MERGED" },
+      project: "MisakaZentai/world-execute-me-dsh-pv",
+      ref: "PR #5",
       url: "https://github.com/MisakaZentai/world-execute-me-dsh-pv/pull/5",
+      evidenceUrl: "https://github.com/MisakaZentai/world-execute-me-dsh-pv/blob/main/docs/60FPS_EXPORT.md",
       note: {
-        zh: "给已有渲染流程补了一份可选的 60 fps 导出说明和验证记录。",
-        en: "Added an optional 60 fps export guide and verification notes to the existing rendering workflow."
+        zh: "补了一份可选的 60 fps FFmpeg 导出流程和验证记录；2026-10-06 已合并到上游。",
+        en: "Added an optional 60 fps FFmpeg export workflow and verification notes; merged upstream on 2026-10-06."
+      }
+    },
+    {
+      id: "dsh-session-memory",
+      status: "open",
+      badge: { zh: "讨论中", en: "OPEN" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "PR #4",
+      url: "https://github.com/NativeDog1/dsh-boot-animation/pull/4",
+      evidenceUrl: "",
+      note: {
+        zh: "在 conversation override 之后继续尝试 per-session clip 记忆；目前仍在上游讨论中。",
+        en: "A follow-up experiment for per-session clip memory after conversation overrides; still open upstream."
       }
     }
   ],
