@@ -45,8 +45,11 @@ function renderHome(lang){
   const p=siteContent.profile;
   return `<div class="shell slide-inner"><div class="hero-grid">
     <div class="hero-copy-wrap reveal">
-      <div class="kicker">${icon("spark")}<span>${esc(t(p.kicker,lang))}</span></div>
-      <h1 class="display"><span class="wordmark">windyduan</span><br><span>${esc(t(p.headline,lang))}</span></h1>
+      <div class="hero-identity">
+        <span class="hero-greeting">${esc(t(p.kicker,lang))}</span>
+        <span class="wordmark hero-name">windyduan</span>
+      </div>
+      <h1 class="display hero-title">${esc(t(p.headline,lang))}</h1>
       <p class="hero-copy">${esc(t(p.intro,lang))}</p>
       <div class="hero-actions" id="hero-links">
         <button class="btn primary" type="button" data-section-go="work">${icon("eye")}<span>${copy[lang].seeWork}</span></button>
