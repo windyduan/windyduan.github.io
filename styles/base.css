@@ -70,15 +70,11 @@ svg.icon{
 .interest-board .reveal:nth-child(6){transition-delay:.26s}
 @keyframes rainbow{to{background-position:230% 0}}
 @keyframes explore-progress{from{width:0}to{width:100%}}
-@keyframes ambient-drift{
-  0%,100%{transform:translate3d(0,0,0) scale(1)}
-  50%{transform:translate3d(-18px,12px,0) scale(1.05)}
-}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .wordmark{animation:none}
   .reveal{opacity:1;transform:none;filter:none;transition:none}
-  .explore-space,.slide:before,.slide:after{animation:none!important}
+  .explore-space{animation:none!important}
   .explore-layer,.project,.interest,.profile-card,.cv-card{transition:none!important}
   *{scroll-behavior:auto!important}
 }
