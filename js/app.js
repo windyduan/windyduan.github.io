@@ -25,7 +25,7 @@ function wire(lang){
   pager=new HorizontalPager({
     carousel,
     topbar:document.getElementById("topbar"),
-    pageDots:document.getElementById("page-dots"),
+    indicator:document.getElementById("direction-hint"),
     lang,
     onSectionChange:id=>{currentSectionId=id;rotator?.setActive(id==="home")}
   });

@@ -30,7 +30,7 @@ export class ExploreRotator{
       <article class="explore-card swap-in">
         <div class="explore-head"><span class="explore-icon">${icon(card.icon)}</span><span class="explore-index">${String(this.index+1).padStart(2,"0")} / ${String(siteContent.exploreCards.length).padStart(2,"0")}</span></div>
         <h2 class="display">${t(card.title,this.lang)}</h2><p>${t(card.note,this.lang)}</p>
-        <div class="explore-bottom"><span class="explore-label">NOW EXPLORING</span><div class="explore-dots">${dots}</div></div>
+        <div class="explore-bottom"><span class="explore-label">${t(siteContent.exploreGroup,this.lang)}</span><div class="explore-dots">${dots}</div></div>
       </article>`;
     this.root.querySelectorAll("[data-rotator-go]").forEach(b=>b.onclick=()=>{this.pause();this.go(Number(b.dataset.rotatorGo));setTimeout(()=>this.resume(),1200)});
     if(keepPaused)this.pause();else this.resume();

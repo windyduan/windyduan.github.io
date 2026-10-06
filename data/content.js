@@ -1,6 +1,6 @@
 export const siteContent = {
   meta: {
-    updated: "2026-10-05",
+    updated: "2026-10-06",
     github: "https://github.com/windyduan",
     cvUrl: "",
     email: ""
@@ -8,21 +8,26 @@ export const siteContent = {
 
   profile: {
     kicker: {
-      zh: "保持好奇，慢慢做东西。",
-      en: "Stay curious. Keep making things."
+      zh: "嗨，我是 windyduan。",
+      en: "Hi, I’m windyduan."
     },
     headline: {
-      zh: "读论文，写代码，也常常被新东西吸引。",
-      en: "I read papers, write code, and get curious about new things."
+      zh: "喜欢把新东西拆开看看，再顺手做点东西。",
+      en: "I like taking new things apart and making something along the way."
     },
     intro: {
-      zh: "我会认真试很多方向。这里不急着给自己下定义，只留下真正做过、学过、验证过的东西。",
-      en: "I like trying different directions seriously. This page is less about defining an identity and more about leaving behind things I have actually built, learned, or tested."
+      zh: "论文、代码、AI、科学、系统、创作——好奇什么就学一点，也尽量留下些什么。",
+      en: "Papers, code, AI, science, systems, creative work — I follow what interests me and try to leave something useful behind."
     },
     about: {
-      zh: "我喜欢先把新东西拆开看，再写点代码、做个小实验，或者给已有项目补上一小块。方向会变，兴趣可以很多；重要的是保持好奇，并尽量把学到的东西变成可以验证、可以讨论的东西。",
-      en: "I like taking new things apart, writing a little code, running a small experiment, or adding one useful piece to an existing project. Directions change and interests can be broad; what matters is staying curious and turning learning into something inspectable and discussable."
+      zh: "我现在还在找最适合长期做的方向。AI 是最近会花很多时间补的一大块，里面会看 agents、具身智能、AI Infra、AI for Science、ML systems 和 AI 创作；AI 之外，软件、可视化、学习工具和各种奇怪的小项目也都很容易把我吸引走。比起先给自己贴标签，我更习惯先做点东西，看看自己到底理解到了哪一步。",
+      en: "I’m still figuring out which directions I want to stay with for the long run. AI is one large area I spend a lot of time learning, including agents, embodied AI, AI infrastructure, AI for Science, ML systems, and creative AI. Outside AI, software, visualization, learning tools, and odd little side projects can pull me in just as easily. I would rather build something first and see what I actually understand than start with a label."
     }
+  },
+
+  exploreGroup: {
+    zh: "AI · 最近在看",
+    en: "AI · currently exploring"
   },
 
   exploreCards: [
@@ -100,30 +105,55 @@ export const siteContent = {
 
   contributions: [
     {
-      id: "dsh-lifecycle", status: "merged",
-      project: "NativeDog1/dsh-boot-animation", pr: "#2",
+      id: "dsh-conversation-override",
+      status: "adopted",
+      badge: { zh: "上游采纳", en: "ADOPTED" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "issue #3",
+      url: "https://github.com/NativeDog1/dsh-boot-animation/issues/3",
+      evidenceUrl: "https://github.com/NativeDog1/dsh-boot-animation/blob/main/CHANGELOG.md#040--2026-09-30",
+      note: {
+        zh: "讨论 conversation-level override 的方向；上游 0.4.0 按这个思路落地，并在 CHANGELOG 里注明来自 issue #3（@windyduan）。",
+        en: "Proposed a conversation-level override direction; upstream 0.4.0 implemented it and credits issue #3 (@windyduan) in the changelog."
+      }
+    },
+    {
+      id: "dsh-lifecycle",
+      status: "merged",
+      badge: { zh: "已合并", en: "MERGED" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "PR #2",
       url: "https://github.com/NativeDog1/dsh-boot-animation/pull/2",
+      evidenceUrl: "https://github.com/NativeDog1/dsh-boot-animation/blob/main/CHANGELOG.md#030--2026-09-29",
       note: {
-        zh: "在已有实现上补了几个客户端生命周期问题：媒体释放、clip 版本刷新和 session identity。",
-        en: "Small client-lifecycle fixes on top of the existing project: media cleanup, clip-version refresh, and session identity."
+        zh: "补了媒体卸载、clip 版本刷新和 session identity 三个客户端生命周期问题；PR 已合并，上游 0.3.0 CHANGELOG 单独记录了这次社区贡献。",
+        en: "Fixed media teardown, clip-version refresh, and session identity issues. The PR was merged and upstream 0.3.0 records the community contribution separately."
       }
     },
     {
-      id: "dsh-session-memory", status: "open",
-      project: "NativeDog1/dsh-boot-animation", pr: "#4",
-      url: "https://github.com/NativeDog1/dsh-boot-animation/pull/4",
-      note: {
-        zh: "补充 per-session clip 记忆，同时保留旧数据兼容和 fallback。",
-        en: "Added per-session clip memory while preserving backward compatibility and fallbacks."
-      }
-    },
-    {
-      id: "pv-60fps", status: "open",
-      project: "MisakaZentai/world-execute-me-dsh-pv", pr: "#5",
+      id: "pv-60fps",
+      status: "merged",
+      badge: { zh: "已合并", en: "MERGED" },
+      project: "MisakaZentai/world-execute-me-dsh-pv",
+      ref: "PR #5",
       url: "https://github.com/MisakaZentai/world-execute-me-dsh-pv/pull/5",
+      evidenceUrl: "https://github.com/MisakaZentai/world-execute-me-dsh-pv/blob/main/docs/60FPS_EXPORT.md",
       note: {
-        zh: "给已有渲染流程补了一份可选的 60 fps 导出说明和验证记录。",
-        en: "Added an optional 60 fps export guide and verification notes to the existing rendering workflow."
+        zh: "补了一份可选的 60 fps FFmpeg 导出流程和验证记录；2026-10-06 已合并到上游。",
+        en: "Added an optional 60 fps FFmpeg export workflow and verification notes; merged upstream on 2026-10-06."
+      }
+    },
+    {
+      id: "dsh-session-memory",
+      status: "open",
+      badge: { zh: "讨论中", en: "OPEN" },
+      project: "NativeDog1/dsh-boot-animation",
+      ref: "PR #4",
+      url: "https://github.com/NativeDog1/dsh-boot-animation/pull/4",
+      evidenceUrl: "",
+      note: {
+        zh: "在 conversation override 之后继续尝试 per-session clip 记忆；目前仍在上游讨论中。",
+        en: "A follow-up experiment for per-session clip memory after conversation overrides; still open upstream."
       }
     }
   ],
@@ -131,33 +161,33 @@ export const siteContent = {
   interests: [
     {
       icon: "brain",
-      title: { zh: "AI / Agents", en: "AI / Agents" },
-      note: { zh: "会持续补基础，也会看不同工作方向和新论文；更想通过项目知道自己到底学会了什么。", en: "I keep learning fundamentals and new directions, and prefer projects as a test of what I actually understand." }
+      title: { zh: "AI", en: "AI" },
+      note: { zh: "这是最近会花很多时间补的一大块。Agents、具身智能、AI Infra、AI4S、ML systems、AI 创作都属于这张更大的地图里。", en: "This is one large area I spend a lot of time learning. Agents, embodied AI, AI infrastructure, AI4S, ML systems, and creative AI all sit somewhere inside that larger map." }
     },
     {
       icon: "atom",
-      title: { zh: "Science", en: "Science" },
-      note: { zh: "AI for Science 是我认可并在探索的科研方向之一，但不会把所有兴趣都装进这个标签。", en: "AI for Science is one research direction I value, but it does not need to contain every interest." }
+      title: { zh: "Science & research", en: "Science & research" },
+      note: { zh: "喜欢科研问题本身，也会关注 AI for Science；但科研兴趣不会只剩下一个标签。", en: "I like scientific questions in their own right and follow AI for Science, without treating it as the only research label." }
     },
     {
       icon: "terminal",
-      title: { zh: "Systems & tools", en: "Systems & tools" },
-      note: { zh: "AI Infra、ML systems、开发者工具，以及把麻烦流程变得更顺手的小工具。", en: "AI infrastructure, ML systems, developer tools, and small utilities that make awkward workflows easier." }
+      title: { zh: "Software & systems", en: "Software & systems" },
+      note: { zh: "开发者工具、系统工程、基础设施，以及把麻烦流程变得更顺手的小东西。", en: "Developer tools, systems engineering, infrastructure, and small utilities that make awkward workflows easier." }
     },
     {
       icon: "palette",
       title: { zh: "Creative work", en: "Creative work" },
-      note: { zh: "AI 创作、可视化、creative coding、媒体和一些纯粹因为好玩的东西。", en: "AI-assisted creation, visualization, creative coding, media, and things built simply because they are fun." }
+      note: { zh: "图像、音乐、可视化、creative coding，也想看看 AI 能不能成为一种真正好用的创作工具。", en: "Images, music, visualization, creative coding, and whether AI can become a genuinely useful creative tool." }
     },
     {
       icon: "book",
-      title: { zh: "Learning systems", en: "Learning systems" },
-      note: { zh: "交互课程、知识组织、笔记和更舒服的学习体验。", en: "Interactive courses, knowledge organization, notes, and more comfortable learning experiences." }
+      title: { zh: "Learning & interfaces", en: "Learning & interfaces" },
+      note: { zh: "交互课程、知识组织、笔记、可视化，以及让复杂东西更容易看懂的界面。", en: "Interactive courses, knowledge organization, notes, visualization, and interfaces that make difficult things easier to inspect." }
     },
     {
       icon: "compass",
-      title: { zh: "Next thing", en: "Next thing" },
-      note: { zh: "求职方向和学术热点都会变化；看到值得学的新东西，就认真试一下。", en: "Job directions and research trends change. If something looks worth learning, I want to try it seriously." }
+      title: { zh: "Other rabbit holes", en: "Other rabbit holes" },
+      note: { zh: "求职方向、学术热点和纯粹好玩的东西都会变。看到值得学的，就先进去看看。", en: "Job directions, research trends, and things that are simply fun will keep changing. If something looks worth learning, I’ll probably take a look." }
     }
   ],
 

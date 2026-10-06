@@ -12,25 +12,24 @@ class ChromeActivity{
 }
 
 export class HorizontalPager{
-  constructor({carousel,topbar,pageDots,lang="zh",onSectionChange}){
-    this.carousel=carousel;this.topbar=topbar;this.pageDots=pageDots;this.lang=lang;this.onSectionChange=onSectionChange;
+  constructor({carousel,topbar,indicator,lang="zh",onSectionChange}){
+    this.carousel=carousel;this.topbar=topbar;this.indicator=indicator;this.lang=lang;this.onSectionChange=onSectionChange;
     this.slides=[...carousel.querySelectorAll(".slide")];this.active=0;this.wheelLock=false;this.chrome=new ChromeActivity(topbar);
     this.abort=new AbortController();
-    this.renderDots();this.bind();this.sync();
+    this.renderIndicator();this.bind();this.sync();
   }
-  setLanguage(lang){this.lang=lang;this.renderDots();this.sync()}
-  renderDots(){
-    this.pageDots.innerHTML='<span class="page-count" id="page-count"></span><div class="page-dot-list">'+sections.map((s,i)=>'<button type="button" class="page-dot" data-page-go="'+i+'" aria-label="'+t(s.label,this.lang)+'"><i></i></button>').join("")+'</div>';
-    this.pageDots.querySelectorAll("[data-page-go]").forEach(b=>b.onclick=()=>this.go(Number(b.dataset.pageGo)));
+  setLanguage(lang){this.lang=lang;this.renderIndicator();this.sync()}
+  renderIndicator(){
+    this.indicator.innerHTML='<span class="page-count" id="page-count"></span><span class="direction-copy" id="direction-copy"></span><span class="direction-arrow" id="direction-arrow">→</span>';
   }
   bind(){
     const opt={signal:this.abort.signal};
     this.carousel.addEventListener("scroll",()=>{
       this.chrome.moving();
       const i=Math.round(this.carousel.scrollLeft/Math.max(1,this.carousel.clientWidth));
-      if(i!==this.active){this.active=i;this.sync()}
+      if(i!==this.active){this.active=i;this.sync()}else this.updateHint();
     },{passive:true,signal:this.abort.signal});
-    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>this.chrome.moving(),{passive:true,signal:this.abort.signal}));
+    this.slides.forEach(slide=>slide.addEventListener("scroll",()=>{this.chrome.moving();if(slide===this.slides[this.active])this.updateHint()},{passive:true,signal:this.abort.signal}));
     this.carousel.addEventListener("touchmove",()=>this.chrome.moving(),{passive:true,signal:this.abort.signal});
     window.addEventListener("keydown",e=>{
       if(["INPUT","TEXTAREA"].includes(document.activeElement?.tagName))return;
@@ -72,10 +71,31 @@ export class HorizontalPager{
   sync(){
     this.slides.forEach((s,i)=>s.classList.toggle("is-active",i===this.active));
     document.querySelectorAll("[data-section-go]").forEach(b=>b.classList.toggle("active",sections[this.active]?.id===b.dataset.sectionGo));
-    this.pageDots.querySelectorAll(".page-dot").forEach((b,i)=>b.classList.toggle("active",i===this.active));
-    const count=this.pageDots.querySelector("#page-count");
+    const count=this.indicator.querySelector("#page-count");
     if(count)count.textContent=String(this.active+1).padStart(2,"0")+" / "+String(this.slides.length).padStart(2,"0");
+    this.updateHint();
     this.onSectionChange?.(sections[this.active]?.id,this.active);
+  }
+  updateHint(){
+    const slide=this.slides[this.active];
+    const label=this.indicator.querySelector("#direction-copy");
+    const arrow=this.indicator.querySelector("#direction-arrow");
+    if(!slide||!label||!arrow)return;
+    const scrollable=slide.scrollHeight>slide.clientHeight+8;
+    const atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-3;
+    if(scrollable&&!atBottom){
+      label.textContent=this.lang==="zh"?"向下滚动":"scroll down";
+      arrow.textContent="↓";
+      this.indicator.dataset.direction="down";
+    }else if(this.active<this.slides.length-1){
+      label.textContent=this.lang==="zh"?(innerWidth<900?"左右滑动":"继续滚动"):(innerWidth<900?"swipe":"keep scrolling");
+      arrow.textContent="→";
+      this.indicator.dataset.direction="right";
+    }else{
+      label.textContent=this.lang==="zh"?"到这里啦":"end";
+      arrow.textContent="·";
+      this.indicator.dataset.direction="end";
+    }
   }
 }
 
