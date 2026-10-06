@@ -205,7 +205,8 @@
 .direction-hint{
   position:fixed;z-index:74;right:22px;bottom:18px;
   display:flex;align-items:center;gap:9px;
-  color:var(--muted);pointer-events:none;user-select:none;
+  color:var(--muted);user-select:none;cursor:pointer;
+  min-height:44px;padding:0 4px;border:0;background:none;
   font:720 10px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.045em;text-transform:uppercase;
   text-shadow:0 1px 0 color-mix(in srgb,var(--surface) 65%,transparent);
@@ -220,7 +221,10 @@
   animation:direction-nudge 1.7s ease-in-out infinite;
 }
 .direction-hint[data-direction="down"] .direction-arrow{animation-name:direction-drop}
-.direction-hint.is-moving{opacity:0;transform:translateY(8px)}
+.direction-hint.is-moving{opacity:0;transform:translateY(8px);pointer-events:none}
+.direction-hint:hover:not(:disabled){color:var(--ink)}
+.direction-hint:focus-visible{outline:2px solid color-mix(in srgb,var(--link) 55%,transparent);outline-offset:6px;border-radius:10px}
+.direction-hint:disabled{cursor:default}
 .direction-hint[data-direction="end"]{opacity:.55}
 .direction-hint[data-direction="end"] .direction-arrow{animation:none}
 .direction-hint:before{
