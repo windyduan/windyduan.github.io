@@ -56,7 +56,7 @@ export class HorizontalPager{
   }
 
   renderIndicator(){
-    this.indicator.innerHTML='<span class="page-count" id="page-count"></span><span class="direction-copy" id="direction-copy"></span><span class="direction-arrow" id="direction-arrow">→</span>';
+    this.indicator.innerHTML='<span class="direction-copy" id="direction-copy"></span><span class="direction-arrow" id="direction-arrow">→</span>';
   }
 
   bind(){
@@ -211,8 +211,6 @@ export class HorizontalPager{
   sync(){
     this.slides.forEach((s,i)=>s.classList.toggle("is-active",i===this.active));
     document.querySelectorAll("[data-section-go]").forEach(b=>b.classList.toggle("active",sections[this.active]?.id===b.dataset.sectionGo));
-    const count=this.indicator.querySelector("#page-count");
-    if(count)count.textContent=String(this.active+1).padStart(2,"0")+" / "+String(this.slides.length).padStart(2,"0");
     this.updateReadingChrome();
     this.updateHint();
     this.onSectionChange?.(sections[this.active]?.id,this.active);
