@@ -8,8 +8,8 @@ export const siteContent = {
 
   profile: {
     kicker: {
-      zh: "嗨，我是 windyduan。",
-      en: "Hi, I’m windyduan."
+      zh: "嗨，我是",
+      en: "Hi, I’m"
     },
     headline: {
       zh: "喜欢把新东西拆开看看，再顺手做点东西。",

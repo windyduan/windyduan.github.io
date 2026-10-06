@@ -66,13 +66,25 @@
 .btn.primary{background:color-mix(in srgb,var(--blue) 72%,var(--surface));color:#17343a;border-color:transparent}
 .btn:hover{transform:translateY(-1px);box-shadow:var(--soft-shadow)}
 
-.hero-copy-wrap h1{font-size:clamp(54px,7.6vw,90px);line-height:1.02;margin:14px 0 16px}
-.hero-copy-wrap h1 .wordmark{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif;
-  font-size:1.05em;
+.hero-identity{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:14px;
 }
-.hero-copy{font-size:17px;line-height:1.82;color:var(--muted);max-width:610px;margin:0}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero-greeting{
+  font-size:17px;font-weight:700;letter-spacing:.01em;color:var(--ink);
+}
+.hero-name{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif;
+  font-size:clamp(30px,3vw,40px);letter-spacing:-1.2px;
+}
+.hero-title{
+  max-width:650px;
+  font-size:clamp(31px,4.25vw,49px);
+  line-height:1.16;
+  margin:0 0 16px;
+}
+.hero-copy{font-size:15.5px;line-height:1.82;color:var(--muted);max-width:590px;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 
 .explore-stage{position:relative;min-height:430px;display:grid;place-items:center;--card-accent:var(--blue)}
 .explore-ghost,.explore-card{
