@@ -20,46 +20,56 @@ export const siteContent = {
       en: "Papers, code, AI, science, systems, creative work — I follow what interests me and try to leave something useful behind."
     },
     about: {
-      zh: "我现在还在找最适合长期做的方向。AI 是最近会花很多时间补的一大块，里面会看 agents、具身智能、AI Infra、AI for Science、ML systems 和 AI 创作；AI 之外，软件、可视化、学习工具和各种奇怪的小项目也都很容易把我吸引走。比起先给自己贴标签，我更习惯先做点东西，看看自己到底理解到了哪一步。",
-      en: "I’m still figuring out which directions I want to stay with for the long run. AI is one large area I spend a lot of time learning, including agents, embodied AI, AI infrastructure, AI for Science, ML systems, and creative AI. Outside AI, software, visualization, learning tools, and odd little side projects can pull me in just as easily. I would rather build something first and see what I actually understand than start with a label."
+      zh: "我现在还在找最适合长期做的方向。求职上会重点看 AI Engineer / Applied AI、Research Engineer、ML Engineer 这类岗位；技术上会继续补 LLM & Agent Systems、Multimodal、Post-training / RL、AI Infra / ML Systems / Inference、具身智能与 Robotics。科研上，我认可 AI for Science，也更关心其中偏 AI 的模型、数据、学习与系统问题。AI 之外，我也会做软件、可视化、学习工具和创作类的小项目。",
+      en: "I’m still figuring out which directions I want to stay with for the long run. For jobs, I’m mainly watching AI Engineer / Applied AI, Research Engineer, and ML Engineer roles. Technically, I’m learning LLM & agent systems, multimodal AI, post-training / RL, AI infrastructure / ML systems / inference, and embodied AI / robotics. On the research side, I’m interested in AI for Science, especially the AI-facing questions around models, data, learning, and systems. Outside AI, I also enjoy software, visualization, learning tools, and creative projects."
     }
   },
 
   exploreGroup: {
-    zh: "AI · 最近在看",
-    en: "AI · currently exploring"
+    zh: "AI · 求职与研究方向",
+    en: "AI · roles & research directions"
   },
 
   exploreCards: [
     {
-      key: "agents", icon: "brain", accent: "blue",
-      title: { zh: "Agents", en: "Agents" },
-      note: { zh: "工具使用、上下文、记忆、工作流，以及它们什么时候真的有用。", en: "Tool use, context, memory, workflows, and when they are actually useful." }
+      key: "applied-ai", icon: "spark", accent: "blue",
+      title: { zh: "AI Engineer / Applied AI", en: "AI Engineer / Applied AI" },
+      note: { zh: "更靠近产品和真实问题：把模型、检索、工具调用、评测与工程系统组合起来。", en: "Closer to products and real problems: combining models, retrieval, tool use, evaluation, and engineering systems." }
     },
     {
-      key: "embodied", icon: "spark", accent: "orange",
-      title: { zh: "具身智能", en: "Embodied AI" },
-      note: { zh: "感知、行动、环境与模型如何连起来，是我想认真补课的一条线。", en: "I want to learn how perception, action, environments, and models fit together." }
+      key: "research-engineering", icon: "brain", accent: "violet",
+      title: { zh: "Research Engineering", en: "Research Engineering" },
+      note: { zh: "我很在意的一类岗位：既需要读论文和做实验，也需要把想法可靠地实现出来。", en: "A role family I care about: reading papers and running experiments, while also turning ideas into reliable implementations." }
     },
     {
-      key: "infra", icon: "terminal", accent: "violet",
-      title: { zh: "AI Infra", en: "AI Infra" },
-      note: { zh: "训练、推理、系统、效率和工程工具，都是值得学的工作方向。", en: "Training, inference, systems, efficiency, and engineering tooling are all directions worth learning." }
+      key: "agents", icon: "brain", accent: "cyan",
+      title: { zh: "LLM & Agent Systems", en: "LLM & Agent Systems" },
+      note: { zh: "Agents、tool use、memory、RAG / search、computer use，以及多智能体系统。", en: "Agents, tool use, memory, RAG / search, computer use, and multi-agent systems." }
+    },
+    {
+      key: "infra", icon: "terminal", accent: "orange",
+      title: { zh: "AI Infra / ML Systems", en: "AI Infra / ML Systems" },
+      note: { zh: "训练与推理、分布式系统、GPU、性能、部署与 inference systems。", en: "Training and inference, distributed systems, GPUs, performance, deployment, and inference systems." }
+    },
+    {
+      key: "multimodal", icon: "eye", accent: "pink",
+      title: { zh: "Multimodal AI", en: "Multimodal AI" },
+      note: { zh: "视觉、语言、视频与生成模型如何连起来，也是现在很值得补的一条线。", en: "How vision, language, video, and generative models fit together is another direction I want to learn seriously." }
+    },
+    {
+      key: "embodied", icon: "spark", accent: "yellow",
+      title: { zh: "Embodied AI / Robotics", en: "Embodied AI / Robotics" },
+      note: { zh: "从感知、world models 到 robot learning、planning、control 和 sim-to-real。", en: "From perception and world models to robot learning, planning, control, and sim-to-real." }
     },
     {
       key: "ai4s", icon: "atom", accent: "green",
       title: { zh: "AI for Science", en: "AI for Science" },
-      note: { zh: "我认可并在探索的科研方向之一，更偏模型、数据与科学问题。", en: "One research direction I value and explore, with an emphasis on models, data, and scientific problems." }
+      note: { zh: "这是我认可的科研方向之一；我更偏向其中的 AI 方法、模型、数据和系统问题。", en: "One research direction I value, with more interest in the AI side: methods, models, data, and systems." }
     },
     {
-      key: "creation", icon: "palette", accent: "pink",
-      title: { zh: "AI 创作", en: "AI Creation" },
-      note: { zh: "图像、音乐、交互、creative coding——也想把 AI 当成创作工具来玩。", en: "Images, music, interaction, creative coding — I also want to use AI as a creative tool." }
-    },
-    {
-      key: "mlsys", icon: "chart", accent: "yellow",
-      title: { zh: "ML Systems", en: "ML Systems" },
-      note: { zh: "把模型真正跑起来、跑稳、跑得更快，本身也很有意思。", en: "Making models run reliably and efficiently is interesting in its own right." }
+      key: "creative", icon: "palette", accent: "pink",
+      title: { zh: "Generative / Creative AI", en: "Generative / Creative AI" },
+      note: { zh: "图像、视频、音乐、交互和 creative coding——也想把 AI 当成创作工具。", en: "Images, video, music, interaction, and creative coding — I also want to use AI as a creative tool." }
     }
   ],
 
@@ -160,34 +170,40 @@ export const siteContent = {
 
   interests: [
     {
-      icon: "brain",
-      title: { zh: "AI", en: "AI" },
-      note: { zh: "这是最近会花很多时间补的一大块。Agents、具身智能、AI Infra、AI4S、ML systems、AI 创作都属于这张更大的地图里。", en: "This is one large area I spend a lot of time learning. Agents, embodied AI, AI infrastructure, AI4S, ML systems, and creative AI all sit somewhere inside that larger map." }
+      icon: "briefcase",
+      title: { zh: "求职方向", en: "Job directions" },
+      note: { zh: "AI Engineer / Applied AI、Research Engineer、ML Engineer。先看岗位真正做什么，再决定该补哪些能力。", en: "AI Engineer / Applied AI, Research Engineer, and ML Engineer. I care more about what the role actually does than the title itself." },
+      tags: ["AI Engineer", "Applied AI", "Research Engineer", "ML Engineer"]
     },
     {
-      icon: "atom",
-      title: { zh: "Science & research", en: "Science & research" },
-      note: { zh: "喜欢科研问题本身，也会关注 AI for Science；但科研兴趣不会只剩下一个标签。", en: "I like scientific questions in their own right and follow AI for Science, without treating it as the only research label." }
+      icon: "brain",
+      title: { zh: "模型与智能系统", en: "Model & agent systems" },
+      note: { zh: "LLM、Agents、RAG / Search、Computer Use、Post-training、RL / Reasoning 都是我会继续补的 AI 技术线。", en: "LLMs, agents, RAG / search, computer use, post-training, and RL / reasoning are AI directions I want to keep learning." },
+      tags: ["LLM", "Agents", "RAG", "Post-training", "RL"]
     },
     {
       icon: "terminal",
-      title: { zh: "Software & systems", en: "Software & systems" },
-      note: { zh: "开发者工具、系统工程、基础设施，以及把麻烦流程变得更顺手的小东西。", en: "Developer tools, systems engineering, infrastructure, and small utilities that make awkward workflows easier." }
+      title: { zh: "AI 系统与基础设施", en: "AI systems & infrastructure" },
+      note: { zh: "AI Infra、ML Systems、Inference、Distributed Training、GPU / Performance，更偏系统与工程的一面。", en: "AI infrastructure, ML systems, inference, distributed training, GPU work, and performance — the systems side of AI." },
+      tags: ["AI Infra", "ML Systems", "Inference", "Distributed", "GPU"]
+    },
+    {
+      icon: "eye",
+      title: { zh: "多模态与具身", en: "Multimodal & embodied" },
+      note: { zh: "Multimodal / VLM、World Models、Embodied AI、Robotics、Robot Learning，横跨模型与物理世界。", en: "Multimodal / VLMs, world models, embodied AI, robotics, and robot learning bridge models with the physical world." },
+      tags: ["Multimodal", "VLM", "World Models", "Robotics"]
+    },
+    {
+      icon: "atom",
+      title: { zh: "科研兴趣", en: "Research interests" },
+      note: { zh: "AI for Science 是我认可并愿意长期探索的科研方向之一；我更偏 AI 侧，关心模型、学习、数据、表示与科学问题之间怎么连接。", en: "AI for Science is one research direction I want to explore over time. I lean toward the AI side: models, learning, data, representations, and their connection to scientific problems." },
+      tags: ["AI4S", "Scientific ML", "Scientific Intelligence"]
     },
     {
       icon: "palette",
-      title: { zh: "Creative work", en: "Creative work" },
-      note: { zh: "图像、音乐、可视化、creative coding，也想看看 AI 能不能成为一种真正好用的创作工具。", en: "Images, music, visualization, creative coding, and whether AI can become a genuinely useful creative tool." }
-    },
-    {
-      icon: "book",
-      title: { zh: "Learning & interfaces", en: "Learning & interfaces" },
-      note: { zh: "交互课程、知识组织、笔记、可视化，以及让复杂东西更容易看懂的界面。", en: "Interactive courses, knowledge organization, notes, visualization, and interfaces that make difficult things easier to inspect." }
-    },
-    {
-      icon: "compass",
-      title: { zh: "Other rabbit holes", en: "Other rabbit holes" },
-      note: { zh: "求职方向、学术热点和纯粹好玩的东西都会变。看到值得学的，就先进去看看。", en: "Job directions, research trends, and things that are simply fun will keep changing. If something looks worth learning, I’ll probably take a look." }
+      title: { zh: "创作与其他兴趣", en: "Creative & other interests" },
+      note: { zh: "Generative AI、图像、视频、音乐、可视化、creative coding，以及任何突然让我想动手做点东西的新方向。", en: "Generative AI, images, video, music, visualization, creative coding, and whatever new direction makes me want to build something." },
+      tags: ["Generative AI", "Creative AI", "Visualization", "Creative Coding"]
     }
   ],
 
@@ -208,7 +224,7 @@ export const sections = [
   { id: "home", type: "home", icon: "home", fixed: true, localToc: false, label: { zh: "首页", en: "Home" } },
   { id: "work", type: "work", icon: "folder", fixed: false, localToc: true, label: { zh: "作品", en: "Work" } },
   { id: "papers", type: "papers", icon: "file", fixed: false, localToc: true, label: { zh: "论文", en: "Papers" } },
-  { id: "oss", type: "oss", icon: "git", fixed: false, localToc: true, label: { zh: "开源", en: "Open source" } },
+  { id: "oss", type: "oss", icon: "git", fixed: false, localToc: true, label: { zh: "开源", en: "OSS" } },
   { id: "interests", type: "interests", icon: "compass", fixed: true, localToc: false, label: { zh: "兴趣", en: "Interests" } },
-  { id: "profile", type: "profile", icon: "user", fixed: true, localToc: false, label: { zh: "Profile", en: "Profile" } }
+  { id: "profile", type: "profile", icon: "user", fixed: true, localToc: false, label: { zh: "关于", en: "About" } }
 ];
