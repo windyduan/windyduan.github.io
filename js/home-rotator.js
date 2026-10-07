@@ -82,6 +82,10 @@ export class ExploreRotator{
     return (index+total)%total;
   }
 
+  motionDuration(ms){
+    return matchMedia("(prefers-reduced-motion: reduce)").matches?0:ms;
+  }
+
   cardMarkup(card,index){
     const dots=siteContent.exploreCards.map((_,i)=>
       `<button class="explore-dot ${i===index?"active":""}" type="button" data-rotator-go="${i}" aria-label="Card ${i+1}"><i></i></button>`
@@ -191,7 +195,7 @@ export class ExploreRotator{
 
       if(manual)this.pauseBriefly(850);
       else this.syncPlayback();
-    },560);
+    },this.motionDuration(560));
   }
 
   jumpTo(target){
@@ -207,7 +211,7 @@ export class ExploreRotator{
       requestAnimationFrame(()=>requestAnimationFrame(()=>this.root.classList.remove("jump-enter")));
       this.transitioning=false;
       this.syncPlayback();
-    },220);
+    },this.motionDuration(220));
   }
 
   destroy(){
