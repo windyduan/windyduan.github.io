@@ -69,8 +69,13 @@
   .explore-space{width:min(92%,360px);height:305px}
   .explore-card{width:100%;min-height:285px;padding:22px}
   .explore-card h2{font-size:32px;margin-top:24px}
-  .layer-mid{transform:translate3d(20px,12px,-55px) rotateY(7deg) rotateZ(3deg) scale(.94)}
-  .layer-back{transform:translate3d(-17px,18px,-110px) rotateY(-8deg) rotateZ(-3.5deg) scale(.89)}
+  .layer-mid{transform:translate3d(22px,13px,-58px) rotateY(6deg) rotateZ(3.2deg) scale(.94)}
+  .layer-back{transform:translate3d(-18px,21px,-116px) rotateY(-7deg) rotateZ(-4deg) scale(.89)}
+  .layer-incoming{transform:translate3d(10px,30px,-164px) rotateY(6deg) rotateZ(4deg) scale(.84)}
+  .explore-stage.is-advancing .layer-back{transform:translate3d(22px,13px,-58px) rotateY(6deg) rotateZ(3.2deg) scale(.94)}
+  .explore-stage.is-advancing .layer-incoming{transform:translate3d(-18px,21px,-116px) rotateY(-7deg) rotateZ(-4deg) scale(.89)}
+  .paper-stack:before{font-size:24px;top:18px}
+  .paper-stack:after{font-size:28px;bottom:16px}
   .project{grid-template-columns:52px minmax(0,1fr);padding:19px;min-height:280px}
   .project-icon{width:44px;height:44px}
   .contrib{grid-template-columns:1fr;gap:9px}
