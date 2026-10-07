@@ -20,9 +20,6 @@ export class ExploreRotator{
     this.abort=new AbortController();
     const signal=this.abort.signal;
 
-    // Deliberately do not pause on hover. When the horizontal page slides back
-    // under a stationary pointer, browsers can fire pointerenter and leave the
-    // carousel looking permanently paused.
     root.addEventListener("pointerdown",()=>this.pauseBriefly(900),{passive:true,signal});
     root.addEventListener("touchstart",()=>this.pauseBriefly(1100),{passive:true,signal});
     root.addEventListener("focusin",()=>{this.focused=true;this.syncPlayback()},{signal});
@@ -33,24 +30,22 @@ export class ExploreRotator{
       this.syncPlayback();
     },{signal});
 
-    this.render();
+    this.renderDeck();
     this.syncPlayback();
   }
 
   setLanguage(lang){
     this.lang=lang;
-    this.render();
+    this.renderDeck();
   }
 
   setActive(isActive){
     this.active=Boolean(isActive);
-
     if(!this.active){
       this.focused=false;
       this.manualPauseUntil=0;
       clearTimeout(this.manualResumeTimer);
     }
-
     this.syncPlayback();
   }
 
@@ -77,99 +72,146 @@ export class ExploreRotator{
     clearTimeout(this.timer);
     const playing=this.shouldPlay();
     this.root.classList.toggle("paused",!playing);
-
     if(playing){
       this.timer=setTimeout(()=>this.advanceTo(this.index+1),this.interval);
     }
   }
 
-  cardAt(offset){
-    const cards=siteContent.exploreCards;
-    return cards[(this.index+offset+cards.length)%cards.length];
+  normalizeIndex(index){
+    const total=siteContent.exploreCards.length;
+    return (index+total)%total;
   }
 
-  renderPeek(card,layer){
-    return `<div class="explore-layer layer-${layer}">
-      <article class="explore-card explore-card-peek">
-        <div class="explore-head">
-          <span class="explore-icon">${icon(card.icon)}</span>
-          <span class="explore-index">${t(siteContent.exploreGroup,this.lang)}</span>
-        </div>
-        <h2 class="display">${t(card.title,this.lang)}</h2>
-      </article>
+  motionDuration(ms){
+    return matchMedia("(prefers-reduced-motion: reduce)").matches?0:ms;
+  }
+
+  cardMarkup(card,index){
+    const dots=siteContent.exploreCards.map((_,i)=>
+      `<button class="explore-dot ${i===index?"active":""}" type="button" data-rotator-go="${i}" aria-label="Card ${i+1}"><i></i></button>`
+    ).join("");
+
+    return `<article class="explore-card" style="--layer-accent:var(--${card.accent})">
+      <div class="explore-head">
+        <span class="explore-icon">${icon(card.icon)}</span>
+        <span class="explore-index">${String(index+1).padStart(2,"0")} / ${String(siteContent.exploreCards.length).padStart(2,"0")}</span>
+      </div>
+      <h2 class="display">${t(card.title,this.lang)}</h2>
+      <p>${t(card.note,this.lang)}</p>
+      <div class="explore-bottom">
+        <span class="explore-label">${t(siteContent.exploreGroup,this.lang)}</span>
+        <div class="explore-dots">${dots}</div>
+      </div>
+    </article>`;
+  }
+
+  layerMarkup(role,index){
+    const normalized=this.normalizeIndex(index);
+    const card=siteContent.exploreCards[normalized];
+    return `<div class="explore-layer layer-${role}" data-role="${role}" data-card-index="${normalized}">
+      ${this.cardMarkup(card,normalized)}
     </div>`;
   }
 
-  renderFront(card){
-    const dots=siteContent.exploreCards.map((_,i)=>`<button class="explore-dot ${i===this.index?"active":""}" type="button" data-rotator-go="${i}" aria-label="Card ${i+1}"><i></i></button>`).join("");
-
-    return `<div class="explore-layer layer-front">
-      <article class="explore-card">
-        <div class="explore-head">
-          <span class="explore-icon">${icon(card.icon)}</span>
-          <span class="explore-index">${String(this.index+1).padStart(2,"0")} / ${String(siteContent.exploreCards.length).padStart(2,"0")}</span>
-        </div>
-        <h2 class="display">${t(card.title,this.lang)}</h2>
-        <p>${t(card.note,this.lang)}</p>
-        <div class="explore-bottom">
-          <span class="explore-label">${t(siteContent.exploreGroup,this.lang)}</span>
-          <div class="explore-dots">${dots}</div>
-        </div>
-      </article>
-    </div>`;
-  }
-
-  render(){
-    const front=this.cardAt(0);
-    const mid=this.cardAt(1);
-    const back=this.cardAt(2);
-
-    this.root.style.setProperty("--card-accent",`var(--${front.accent})`);
-    this.root.style.setProperty("--mid-accent",`var(--${mid.accent})`);
-    this.root.style.setProperty("--back-accent",`var(--${back.accent})`);
-
+  renderDeck(){
+    this.root.classList.remove("is-advancing","is-jumping");
     this.root.innerHTML=`<div class="explore-space">
-      ${this.renderPeek(back,"back")}
-      ${this.renderPeek(mid,"mid")}
-      ${this.renderFront(front)}
+      ${this.layerMarkup("incoming",this.index+3)}
+      ${this.layerMarkup("back",this.index+2)}
+      ${this.layerMarkup("mid",this.index+1)}
+      ${this.layerMarkup("front",this.index)}
     </div>`;
+    this.bindDots();
+    this.syncPlayback();
+  }
 
+  bindDots(){
     this.root.querySelectorAll("[data-rotator-go]").forEach(button=>{
       button.onclick=()=>{
         const target=Number(button.dataset.rotatorGo);
+        if(target===this.index)return;
         this.pauseBriefly(1200);
-        if(target!==this.index)this.advanceTo(target,{manual:true});
+        this.advanceTo(target,{manual:true});
       };
     });
+  }
 
-    this.syncPlayback();
+  updateLayer(layer,index){
+    const normalized=this.normalizeIndex(index);
+    const card=siteContent.exploreCards[normalized];
+    layer.dataset.cardIndex=String(normalized);
+    layer.innerHTML=this.cardMarkup(card,normalized);
   }
 
   advanceTo(target,{manual=false}={}){
     if(this.transitioning)return;
 
-    const cards=siteContent.exploreCards;
-    const normalized=(target+cards.length)%cards.length;
+    const normalized=this.normalizeIndex(target);
     if(normalized===this.index){
       this.syncPlayback();
       return;
     }
 
+    const next=this.normalizeIndex(this.index+1);
+    if(normalized!==next){
+      this.jumpTo(normalized);
+      if(manual)this.pauseBriefly(850);
+      return;
+    }
+
     clearTimeout(this.timer);
     this.transitioning=true;
-    this.root.classList.add("is-advancing");
-    this.root.classList.add("paused");
+    this.root.classList.add("is-advancing","paused");
 
     clearTimeout(this.transitionTimer);
     this.transitionTimer=setTimeout(()=>{
+      const front=this.root.querySelector(".layer-front");
+      const mid=this.root.querySelector(".layer-mid");
+      const back=this.root.querySelector(".layer-back");
+      const incoming=this.root.querySelector(".layer-incoming");
+
       this.index=normalized;
-      this.transitioning=false;
+
+      front.classList.remove("layer-front");
+      front.classList.add("layer-incoming");
+      front.dataset.role="incoming";
+      this.updateLayer(front,this.index+3);
+
+      mid.classList.remove("layer-mid");
+      mid.classList.add("layer-front");
+      mid.dataset.role="front";
+
+      back.classList.remove("layer-back");
+      back.classList.add("layer-mid");
+      back.dataset.role="mid";
+
+      incoming.classList.remove("layer-incoming");
+      incoming.classList.add("layer-back");
+      incoming.dataset.role="back";
+
       this.root.classList.remove("is-advancing");
-      this.render();
+      this.transitioning=false;
+      this.bindDots();
 
       if(manual)this.pauseBriefly(850);
       else this.syncPlayback();
-    },430);
+    },this.motionDuration(560));
+  }
+
+  jumpTo(target){
+    clearTimeout(this.timer);
+    this.transitioning=true;
+    this.root.classList.add("is-jumping","paused");
+
+    clearTimeout(this.transitionTimer);
+    this.transitionTimer=setTimeout(()=>{
+      this.index=target;
+      this.renderDeck();
+      this.root.classList.add("jump-enter");
+      requestAnimationFrame(()=>requestAnimationFrame(()=>this.root.classList.remove("jump-enter")));
+      this.transitioning=false;
+      this.syncPlayback();
+    },this.motionDuration(220));
   }
 
   destroy(){
