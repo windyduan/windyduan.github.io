@@ -112,9 +112,6 @@
   place-items:center;
   perspective:1200px;
   perspective-origin:54% 45%;
-  --card-accent:var(--blue);
-  --mid-accent:var(--violet);
-  --back-accent:var(--green);
 }
 .explore-space{
   position:relative;
@@ -122,28 +119,29 @@
   height:360px;
   transform-style:preserve-3d;
   animation:stage-float 7s ease-in-out infinite;
+  transition:opacity .22s ease,transform .28s cubic-bezier(.22,1,.36,1);
 }
 .explore-layer{
   position:absolute;
   inset:0;
   transform-style:preserve-3d;
   transition:
-    transform .48s cubic-bezier(.2,.8,.2,1),
-    opacity .32s ease,
-    filter .32s ease;
+    transform .56s cubic-bezier(.22,1,.36,1),
+    opacity .34s ease,
+    filter .34s ease;
 }
 .explore-card{
   position:relative;
   width:100%;
   height:100%;
   min-height:330px;
-  border:1px solid color-mix(in srgb,var(--line) 78%,var(--card-accent));
+  border:1px solid color-mix(in srgb,var(--line) 78%,var(--layer-accent));
   border-radius:25px 30px 24px 29px;
   padding:27px;
   display:flex;
   flex-direction:column;
   background:
-    linear-gradient(145deg,color-mix(in srgb,var(--card-accent) 27%,var(--surface)),var(--surface) 58%,color-mix(in srgb,var(--pink) 8%,var(--surface)));
+    linear-gradient(145deg,color-mix(in srgb,var(--layer-accent) 27%,var(--surface)),var(--surface) 58%,color-mix(in srgb,var(--pink) 8%,var(--surface)));
   box-shadow:
     0 24px 52px color-mix(in srgb,var(--ink) 10%,transparent),
     0 9px 24px color-mix(in srgb,var(--ink) 7%,transparent),
@@ -155,57 +153,82 @@
 }
 .explore-card>*{position:relative;z-index:1}
 .layer-front{
-  z-index:3;
-  transform:translate3d(0,0,42px) rotateX(.8deg) rotateY(-1.8deg);
+  z-index:4;
+  transform:translate3d(0,0,44px) rotateX(.3deg) rotateY(-.7deg) rotateZ(-.25deg);
 }
 .layer-mid{
-  z-index:2;
-  transform:translate3d(30px,15px,-70px) rotateY(8deg) rotateZ(3.5deg) scale(.94);
-  filter:saturate(.9) brightness(.98);
+  z-index:3;
+  transform:translate3d(27px,13px,-48px) rotateY(3deg) rotateZ(1.7deg) scale(.96);
+  filter:saturate(.94) brightness(.99);
 }
 .layer-back{
+  z-index:2;
+  transform:translate3d(-15px,23px,-102px) rotateY(-4deg) rotateZ(-2.3deg) scale(.91);
+  filter:saturate(.88) brightness(.98);
+}
+.layer-incoming{
   z-index:1;
-  transform:translate3d(-24px,25px,-145px) rotateY(-10deg) rotateZ(-4deg) scale(.87);
-  filter:saturate(.78) brightness(.96);
-}
-.layer-mid .explore-card{
-  background:
-    linear-gradient(150deg,color-mix(in srgb,var(--mid-accent) 13%,var(--surface)),var(--surface) 46%,var(--surface));
-  border-color:color-mix(in srgb,var(--line) 62%,var(--mid-accent));
-  box-shadow:
-    inset 0 4px 0 color-mix(in srgb,var(--mid-accent) 62%,var(--surface)),
-    0 18px 38px color-mix(in srgb,var(--ink) 8%,transparent);
-}
-.layer-back .explore-card{
-  background:
-    linear-gradient(150deg,color-mix(in srgb,var(--back-accent) 10%,var(--surface)),var(--surface) 44%,var(--surface));
-  border-color:color-mix(in srgb,var(--line) 66%,var(--back-accent));
-  box-shadow:
-    inset 0 4px 0 color-mix(in srgb,var(--back-accent) 54%,var(--surface)),
-    0 14px 30px color-mix(in srgb,var(--ink) 6%,transparent);
-}
-.explore-card-peek{
-  padding:23px;
-  opacity:.96;
-}
-.explore-card-peek h2{font-size:29px;margin:36px 0 0;line-height:1.1}
-.explore-card-peek .explore-index{max-width:180px;text-align:right;font-size:8px}
-.explore-stage.is-advancing .layer-front{
-  transform:translate3d(-34px,-8px,70px) rotateY(-58deg) rotateZ(-3deg) scale(.96);
+  transform:translate3d(8px,31px,-158px) rotateY(4deg) rotateZ(2deg) scale(.86);
   opacity:0;
-  filter:blur(1.5px);
+  filter:saturate(.82) brightness(.97);
+}
+.explore-layer:not(.layer-front) .explore-card{
+  background:
+    linear-gradient(150deg,color-mix(in srgb,var(--layer-accent) 11%,var(--surface)),var(--surface) 46%,var(--surface));
+  border-color:color-mix(in srgb,var(--line) 64%,var(--layer-accent));
+  box-shadow:
+    inset 0 4px 0 color-mix(in srgb,var(--layer-accent) 56%,var(--surface)),
+    0 16px 34px color-mix(in srgb,var(--ink) 7%,transparent);
+}
+.explore-layer:not(.layer-front) .explore-card p,
+.explore-layer:not(.layer-front) .explore-bottom{
+  opacity:0;
+  transform:translateY(8px);
+  pointer-events:none;
+}
+.explore-card p,
+.explore-bottom{
+  transition:opacity .28s ease,transform .36s cubic-bezier(.22,1,.36,1);
+}
+.explore-stage.is-advancing .layer-front{
+  transform:translate3d(-38px,7px,68px) rotateY(-5deg) rotateZ(-2.2deg) scale(.96);
+  opacity:0;
 }
 .explore-stage.is-advancing .layer-mid{
-  transform:translate3d(0,0,42px) rotateX(.8deg) rotateY(-1.8deg) scale(1);
+  transform:translate3d(0,0,44px) rotateX(.3deg) rotateY(-.7deg) rotateZ(-.25deg) scale(1);
+  filter:saturate(1) brightness(1);
 }
 .explore-stage.is-advancing .layer-back{
-  transform:translate3d(28px,15px,-70px) rotateY(8deg) rotateZ(3deg) scale(.94);
-  filter:saturate(.9) brightness(.98);
+  transform:translate3d(27px,13px,-48px) rotateY(3deg) rotateZ(1.7deg) scale(.96);
+  filter:saturate(.94) brightness(.99);
+}
+.explore-stage.is-advancing .layer-incoming{
+  transform:translate3d(-15px,23px,-102px) rotateY(-4deg) rotateZ(-2.3deg) scale(.91);
+  opacity:1;
+  filter:saturate(.88) brightness(.98);
+}
+.explore-stage.is-advancing .layer-mid .explore-card p,
+.explore-stage.is-advancing .layer-mid .explore-bottom{
+  opacity:1;
+  transform:none;
+}
+.explore-stage.is-advancing .layer-front .explore-card p,
+.explore-stage.is-advancing .layer-front .explore-bottom{
+  opacity:0;
+  transform:translateY(-5px);
+}
+.explore-stage.is-jumping .explore-space{
+  opacity:.22;
+  transform:translate3d(-10px,4px,0) scale(.985);
+}
+.explore-stage.jump-enter .explore-space{
+  opacity:.28;
+  transform:translate3d(10px,-3px,0) scale(.99);
 }
 .explore-head{display:flex;align-items:center;justify-content:space-between;gap:15px}
 .explore-icon{
   width:54px;height:54px;border-radius:17px;display:grid;place-items:center;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--card-accent) 72%,white),color-mix(in srgb,var(--card-accent) 82%,var(--surface)));
+  background:linear-gradient(145deg,color-mix(in srgb,var(--layer-accent) 72%,white),color-mix(in srgb,var(--layer-accent) 82%,var(--surface)));
   color:#213b3d;
   box-shadow:inset 0 1px 0 #ffffff78,0 7px 16px color-mix(in srgb,var(--ink) 8%,transparent);
 }
@@ -219,11 +242,11 @@
 .explore-dots{display:flex;gap:6px;margin-top:13px}
 .explore-dot{
   width:22px;height:5px;padding:0;border:0;border-radius:99px;
-  background:color-mix(in srgb,var(--surface-3) 82%,var(--card-accent));
+  background:color-mix(in srgb,var(--surface-3) 82%,var(--layer-accent));
   overflow:hidden;cursor:pointer
 }
-.explore-dot i{display:block;width:0;height:100%;background:var(--card-accent);border-radius:inherit}
-.explore-dot.active i{animation:explore-progress 3s linear forwards}
+.explore-dot i{display:block;width:0;height:100%;background:var(--layer-accent);border-radius:inherit}
+.layer-front .explore-dot.active i{animation:explore-progress 3s linear forwards}
 .explore-stage.paused .explore-dot.active i{animation-play-state:paused}
 @keyframes stage-float{
   0%,100%{transform:translate3d(0,0,0) rotateX(0)}
