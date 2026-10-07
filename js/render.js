@@ -4,12 +4,12 @@ import { icon } from "./icons.js";
 const copy={
   zh:{
     workTitle:"作品",workBody:"不把仓库全搬过来，只挑能说明我怎么做事的公开项目。",
-    papersTitle:"Research",papersBody:"论文、预印本、海报和公开项目页准备好以后，会从这里长出来。",
+    papersTitle:"研究",papersBody:"论文、预印本、海报和公开项目页准备好以后，会从这里长出来。",
     papersEmptyTitle:"这里先留一张空白稿纸。",
     papersEmptyBody:"还没有适合公开写进主页的论文时，就不硬凑。以后只改 content.js，页面结构不用动。",
-    ossTitle:"Open Source",ossBody:"更多时候，只是在别人已经做得很好的项目上补一点小东西。",
+    ossTitle:"开源",ossBody:"更多时候，只是在别人已经做得很好的项目上补一点小东西。",
     ossThanks:"<strong>感谢开源。</strong> 这些贡献建立在维护者和原作者已经完成的大量工作上；这里只记录我补上的 bug、文档、验证或小功能。",
-    interestsTitle:"Interests",interestsBody:"把求职、AI 技术方向和科研兴趣分开看。关键词会变，我更想通过项目和实验确认自己真正会什么。",
+    interestsTitle:"兴趣与方向",interestsBody:"把求职、AI 技术方向和科研兴趣分开看。关键词会变，我更想通过项目和实验确认自己真正会什么。",
     profileTitle:"关于我",
     profileRule:"能点开的项目、论文和贡献，比一串形容词更有用。",
     cvTitle:"这里以后会放 CV 和经历。",
